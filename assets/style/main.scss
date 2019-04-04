@@ -1,0 +1,64 @@
+$primary: #28913b;
+$secondary: #7ad41d;
+//$tertiary: #c7eb00;
+
+@import "bootstrap/bootstrap";
+
+html body {
+  font-family: Linotte, serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+.logo img {
+  -webkit-transition: all 1s;
+  -moz-transition: all .2s;
+  -ms-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all 1s;
+  width: 100%;
+  max-width: fit-content;
+}
+
+.logo.minimized img {
+  width: 10%;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  background-color: white;
+}
+
+a {
+  color: #000;
+}
+
+a.nav-link:hover {
+  color: $secondary !important;
+}
+
+#newGame {
+  font-size: 20px;
+}
+
+.popover-header {
+  padding: 13px !important;
+}
+
+///////////////////
+
+@font-face {
+  font-family: Linotte;
+  font-weight: normal;
+  src: url("../font/Linotte/Linotte Regular.otf");
+}
+
+@font-face {
+  font-family: Linotte;
+  font-weight: bold;
+  src: url("../font/Linotte/Linotte Bold.otf");
+}
