@@ -1,4 +1,5 @@
-//https://opentdb.com/api.php?amount=10&category=18&difficulty=easy
+requirejs(['assets/script/game']);
+requirejs(['assets/script/utils']);
 
 $(document).ready(function() {
 
@@ -23,7 +24,7 @@ $(document).ready(function() {
                 });
                 $('#newGameDifficult').click(() => {
                     newGameBtn.popover('dispose');
-                    newGame(difficulties.DIFFICULT);
+                    newGame(difficulties.HARD);
                 });
             }, 200);
 
@@ -34,18 +35,18 @@ $(document).ready(function() {
         title: "Scegli il livello di difficoltà",
     });
 
-    const difficulties = Object.freeze({
-        'EASY': 0,
-        'MEDIUM': 1,
-        'DIFFICULT': 2,
-    });
-
     function newGame(difficulty) {
-        console.log('New game started in mode ' + difficulty);
 
-        // Initialize environment
+        // Prepare environment
         $('.logo').addClass('minimized');
         newGameBtn.fadeOut();
+
+        // Instantiate game
+        const game = new Game(difficulty);
+        game.fetchQuestions();
+
+        console.log(game.questions);
+
     }
 
 });
