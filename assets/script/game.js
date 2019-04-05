@@ -20,6 +20,7 @@ class Game {
 
         this.difficulty = swap(difficulties)[difficulty].toLowerCase();
         this.questions = [];
+        this.currentQuestion = -1;
     }
 
     fetchQuestions() {
@@ -36,10 +37,42 @@ class Game {
             // TODO
             this.createQuestion(questionJSON);
         });
+
+        // Init game
+        $('#loader').fadeOut();
+        setTimeout(() => {
+
+            // Let's mix questions :)
+            this.questions = shuffle(this.questions);
+
+            // First question!
+            this.nextQuestion();
+            $('#game').fadeIn();
+            $('#newGameNav').fadeIn();
+
+        }, 400);
     };
 
     createQuestion(questionData) {
-        this.questions.push(new Question(questionData.question, questionData['correct_answer'], questionData['incorrect_answers']));
+        this.questions.push(new Question(questionData['question'], questionData['correct_answer'], questionData['incorrect_answers']));
+    }
+
+    nextQuestion() {
+        this.currentQuestion++;
+        this.draw();
+    }
+
+    draw() {
+
+        const questionHTML = '<h3>' + this.questions[this.currentQuestion].question + '</h3>';
+
+        const answers = shuffle([].concat(this.questions[this.currentQuestion].incorrectAnswers).concat([this.questions[this.currentQuestion].correctAnswer]));
+        let answersHTML = '';
+        answers.forEach(answer => answersHTML += '<div class="answer"><input type="radio" name="answer" value="' + answer + '" class="mr-2"> ' + answer + '</div>');
+
+        const nextBtnHTML = '<button type="button" class="btn btn-primary mt-3">Avanti</button>';
+
+        $('#game').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
     }
 
 }

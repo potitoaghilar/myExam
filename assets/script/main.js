@@ -40,12 +40,15 @@ $(document).ready(function() {
         // Prepare environment
         $('.logo').addClass('minimized');
         newGameBtn.fadeOut();
+        setTimeout(function () {
 
-        // Instantiate game
-        const game = new Game(difficulty);
-        game.fetchQuestions();
+            $('#loader').fadeIn();
 
-        console.log(game.questions);
+            // Instantiate game
+            const game = new Game(difficulty);
+            game.fetchQuestions();
+
+        }, 1000);
 
     }
 

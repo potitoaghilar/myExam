@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <title>BrainQuiz</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style/loader.css">
     <link rel="stylesheet" href="assets/style/main.css">
 </head>
 <body>
 
-    <nav>
+    <nav class="m-3">
         <ul class="nav justify-content-end">
             <li class="nav-item">
-                <a class="nav-link active" href="/">Home page</a>
+                <a id="newGameNav" class="nav-link" href="/" style="display: none;">Nuova partita</a>
             </li>
             <li class="nav-item text-secondary">
                 <a class="nav-link" href="/info.html">Info</a>
+            </li>
+            <li class="nav-item text-secondary">
+                <a class="nav-link" href="/info.html">FAQ</a>
             </li>
         </ul>
     </nav>
@@ -27,6 +31,14 @@
             <div class="col text-center">
                 <button id="newGame" type="button" class="btn btn-primary px-4 py-2">Nuova partita</button>
             </div>
+
+            <!-- Loader -->
+            <div id="loader" class="mt-5" style="display: none; height: 300px;">
+                <div class="loader">Caricamento</div>
+            </div>
+
+            <div id="game" class="mx-auto w-75" style="display: none;"></div>
+
         </div>
     </section>
 
