@@ -8285,8 +8285,8 @@ a.nav-link:hover {
 
 #game .answer {
   margin: 10px 0;
-  padding: 6px 15px;
-  border: 1px solid #28913b;
+  padding: 15px;
+  border: 1px solid #6ca977;
   border-radius: 6px;
   box-shadow: 0 0 15px rgba(0, 128, 0, 0.09);
   cursor: pointer;
@@ -8300,6 +8300,27 @@ a.nav-link:hover {
 #game .answer:hover, #game .answer.selected {
   background-color: #28913b;
   color: #fff;
+  border-color: #28913b;
+}
+
+.radio input + span {
+  height: auto;
+}
+
+.summaryLabel {
+  font-size: xx-large;
+  color: #424242;
+}
+
+.summary {
+  font-size: 55px;
+}
+.summary span {
+  font-size: 35px;
+}
+
+.comment {
+  font-size: x-large;
 }
 
 @font-face {

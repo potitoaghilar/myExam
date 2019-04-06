@@ -5,6 +5,7 @@
     <title>BrainQuiz</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/style/loader.css">
+    <link rel="stylesheet" href="assets/style/radiobutton.css">
     <link rel="stylesheet" href="assets/style/main.css">
 </head>
 <body>
@@ -25,11 +26,8 @@
 
     <section class="container">
         <div class="col text-center">
-            <div class="logo mb-4">
+            <div class="logo mb-5">
                 <img src="assets/img/logo.png" alt="brainquiz">
-            </div>
-            <div class="col text-center">
-                <button id="newGame" type="button" class="btn btn-primary px-4 py-2">Nuova partita</button>
             </div>
 
             <!-- Loader -->
@@ -37,7 +35,13 @@
                 <div class="loader">Caricamento</div>
             </div>
 
+            <!-- Main game container -->
             <div id="game" class="mx-auto w-75" style="display: none;"></div>
+
+            <!-- New Game Button -->
+            <div class="col text-center">
+                <button id="newGame" type="button" class="btn btn-primary px-4 py-2">Nuova partita</button>
+            </div>
 
         </div>
     </section>

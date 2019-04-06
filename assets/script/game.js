@@ -1,4 +1,3 @@
-//https://opentdb.com/api.php?amount=10&category=18&type=multiple&difficulty=easy
 //https://translate.yandex.net/api/v1.5/tr.json/translate?text=hello&lang=it&key=trnsl.1.1.20190404T223555Z.8dc52d79cdc709a3.0cacf308c8148501b80f342dd301cdbe03225b1c
 
 requirejs(['assets/script/question']);
@@ -21,6 +20,7 @@ class Game {
         this.difficulty = swap(difficulties)[difficulty].toLowerCase();
         this.questions = [];
         this.currentQuestion = -1;
+        this.answers = [];
     }
 
     fetchQuestions() {
@@ -47,7 +47,6 @@ class Game {
 
             // First question!
             this.nextQuestion();
-            $('#game').fadeIn();
             $('#newGameNav').fadeIn();
 
         }, 400);
@@ -58,8 +57,53 @@ class Game {
     }
 
     nextQuestion() {
-        this.currentQuestion++;
-        this.draw();
+
+        // Variables
+        const gameElem = $('#game');
+        const next = () => {
+
+            this.currentQuestion++;
+            this.draw();
+
+            // Fadein animation
+            gameElem.fadeIn();
+        };
+
+        switch (this.currentQuestion) {
+            case -1:
+                // First question
+                next();
+                break;
+            case this.questions.length - 1:
+                // This is the last question. So show results
+                gameElem.fadeOut();
+                $('#newGameNav').fadeOut();
+                setTimeout(() => {
+                    this.showResults();
+                }, 400);
+                break;
+            default:
+                // Next question
+                gameElem.fadeOut();
+                setTimeout(() => {
+                    next();
+                }, 400);
+        }
+
+    }
+
+    saveAnswer() {
+
+        let correct = false;
+
+        // Check answer
+        if($(".answer input:checked").first().val().toLowerCase() === this.questions[this.currentQuestion].correctAnswer.toLowerCase()) {
+            correct = true;
+        }
+
+        // Save result
+        this.answers.push(correct);
+
     }
 
     draw() {
@@ -68,11 +112,42 @@ class Game {
 
         const answers = shuffle([].concat(this.questions[this.currentQuestion].incorrectAnswers).concat([this.questions[this.currentQuestion].correctAnswer]));
         let answersHTML = '';
-        answers.forEach(answer => answersHTML += '<div class="answer"><input type="radio" name="answer" value="' + answer + '" class="mr-2"> ' + answer + '</div>');
+        answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer + '"><span>' + answer + '</span></label>');
 
-        const nextBtnHTML = '<button type="button" class="btn btn-primary mt-3">Avanti</button>';
+        const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Avanti</button>';
 
         $('#game').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
+
+        // Add click listener to nextQuestion Button
+        $('#nextQuestion').click(() => {
+            if($(".answer input:checked").first().val() !== undefined) {
+                this.saveAnswer();
+                this.nextQuestion();
+            }
+        });
+    }
+
+    showResults() {
+
+        const risposteCorrette = this.answers.filter(x => x === true).length;
+
+        const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Game.questionAmount + '</span></div>';
+        let comment = '';
+        if(risposteCorrette === Game.questionAmount) {
+            comment = 'Grande, le sai tutte!';
+        } else {
+            comment = 'Si può sempre migliorare!';
+        }
+        comment = '<div class="mt-3 mb-5 comment">' + comment + '</div>';
+
+        $('#game').html(result + comment).fadeIn();
+
+        setTimeout(() => {
+            $('#newGame').text('Riprova').click(function() {
+                location.reload();
+            }).fadeIn();
+        }, 1500);
+
     }
 
 }
