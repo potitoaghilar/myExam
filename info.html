@@ -3,8 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>BrainQuiz - Info</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style/main.css">
 </head>
 <body>
 
+    <nav class="m-3">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a id="newGameNav" class="nav-link" href="/">Nuova partita</a>
+            </li>
+            <li class="nav-item text-secondary">
+                <a class="nav-link" href="/info.html">Info</a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="container">
+        <div class="col text-center">
+
+            <div class="col-5 mb-5 mx-auto">
+                <div class="row">
+                    <div class="col-6 mx-auto logo">
+                        <img src="assets/img/logo.png" alt="brainquiz">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="container text-center">
+        <div class="info mx-auto w-75">
+            BrainQuiz mette alla prova la tua mente con domande di qualsiasi difficoltà pensate per apposta per sfidarti. Il progetto è stato interamente realizzato da Potito Aghilar e reso open source su GitHub.
+        </div>
+        <div class="col mt-5 text-center">
+            <button id="newGame" type="button" class="btn btn-primary px-4 py-2" onclick="location='/'">Vai alla Home</button>
+        </div>
+    </section>
+
+    <footer>
+        <small>
+            Realizzato da Potito Aghilar
+        </small>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="assets/script/require.js"></script>
 </body>
 </html>

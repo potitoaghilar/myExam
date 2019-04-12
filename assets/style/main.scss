@@ -11,6 +11,14 @@ html body {
   margin-bottom: 40px;
 }
 
+.logo {
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+
 .logo img {
   -webkit-transition: all 1s;
   -moz-transition: all .2s;
@@ -22,7 +30,7 @@ html body {
 }
 
 .logo.minimized img {
-  width: 10%;
+  width: 60%;
 }
 
 footer {
@@ -67,10 +75,16 @@ a.nav-link:hover {
   transition: all .2s;
 }
 
-#game .answer:hover, #game .answer.selected {
+#game .answer:hover, #game .answer.selected, #game .answer.correct {
   background-color: $primary;
   color: #fff;
   border-color: $primary;
+}
+
+#game .answer.wrong {
+  background-color: #ad1c1c;
+  color: #fff;
+  border-color: #ad1c1c;
 }
 
 .radio input + span {
@@ -94,6 +108,21 @@ a.nav-link:hover {
   font-size: x-large;
 }
 
+.points {
+  border-left: 1px solid;
+  border-image: linear-gradient(#fff, mix($primary, #000), #fff) 0 100%;
+  padding: 10px 0;
+  overflow: hidden;
+
+  .value {
+    font-size: xx-large;
+  }
+
+}
+
+.info {
+  font-size: x-large;
+}
 
 ///////////////////
 
