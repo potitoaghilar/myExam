@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BrainQuiz</title>
+    <title>BrainQuiz - Test your knowledge</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/style/loader.css">
     <link rel="stylesheet" href="assets/style/radiobutton.css">
@@ -18,16 +18,22 @@
             <li class="nav-item text-secondary">
                 <a class="nav-link" href="/info.html">Info</a>
             </li>
-            <li class="nav-item text-secondary">
-                <a class="nav-link" href="/info.html">FAQ</a>
-            </li>
         </ul>
     </nav>
 
     <section class="container">
         <div class="col text-center">
-            <div class="logo mb-5">
-                <img src="assets/img/logo.png" alt="brainquiz">
+
+            <div class="col-5 mb-5 mx-auto">
+                <div class="row">
+                    <div class="col-9 mx-auto logo">
+                        <img src="assets/img/logo.png" alt="brainquiz">
+                    </div>
+                    <div class="my-auto points" style="width: 0; opacity: 0;">
+                        <div>Punti:</div>
+                        <span class="value">0</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Loader -->
@@ -56,6 +62,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="assets/script/require.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js"></script>
     <script src="assets/script/main.js"></script>
 </body>
 </html>

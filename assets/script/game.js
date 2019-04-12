@@ -8,6 +8,12 @@ const difficulties = Object.freeze({
     'HARD': 2,
 });
 
+const pointsMap = Object.freeze({
+    0: 20, // EASY
+    1: 50, // MEDIUM
+    2: 100, // HARD
+});
+
 class Game {
 
     static get questionAmount() { return 10; }
@@ -21,6 +27,8 @@ class Game {
         this.questions = [];
         this.currentQuestion = -1;
         this.answers = [];
+        this.points = 0;
+        this.difficultyVal = difficulty; // Used in points computation
     }
 
     fetchQuestions() {
@@ -73,6 +81,7 @@ class Game {
             case -1:
                 // First question
                 next();
+                Game.showPoints();
                 break;
             case this.questions.length - 1:
                 // This is the last question. So show results
@@ -94,16 +103,38 @@ class Game {
 
     saveAnswer() {
 
-        let correct = false;
+        let isCorrect = false;
 
         // Check answer
         if($(".answer input:checked").first().val().toLowerCase() === this.questions[this.currentQuestion].correctAnswer.toLowerCase()) {
-            correct = true;
+            isCorrect = true;
         }
 
-        // Save result
-        this.answers.push(correct);
+        // Update points in UI
+        this.updatePoints(isCorrect);
 
+        // Save result
+        this.answers.push(isCorrect);
+
+        return isCorrect;
+
+    }
+
+    updatePoints(answer) {
+        if(answer) {
+
+            // Add points to total
+            this.points = this.points + pointsMap[this.difficultyVal];
+
+        } else {
+
+            // Divide total points by 2
+            this.points = this.points / 2;
+
+        }
+
+        // Update UI
+        $('.points .value').animateNumber({ number: this.points }).prop('number', this.points);
     }
 
     draw() {
@@ -120,11 +151,36 @@ class Game {
 
         // Add click listener to nextQuestion Button
         $('#nextQuestion').click(() => {
-            if($(".answer input:checked").first().val() !== undefined) {
-                this.saveAnswer();
-                this.nextQuestion();
+
+            const selectedAnswer = $(".answer input:checked").first();
+
+            if(selectedAnswer.val() !== undefined) {
+
+                // Save user answer
+                let isCorrect = this.saveAnswer();
+
+                // Mark correct and wrong answers
+                if(isCorrect) {
+                    // Mark as correct
+                    selectedAnswer.parent().addClass('correct')
+                } else {
+                    // Mark as wrong
+                    selectedAnswer.parent().addClass('wrong');
+                    // Highlight correct
+                    $(".answer input[value='" + this.questions[this.currentQuestion].correctAnswer + "']").first().parent().addClass('correct');
+                }
+
+                // Go to next question
+                setTimeout(() => this.nextQuestion(), 1000);
+
             }
         });
+    }
+
+    static showPoints() {
+
+        $('.points').animate({width: '40%'}, 400).fadeTo(400, 1);
+
     }
 
     showResults() {

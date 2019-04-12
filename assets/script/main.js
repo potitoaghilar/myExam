@@ -38,7 +38,7 @@ $(document).ready(function() {
     function newGame(difficulty) {
 
         // Prepare environment
-        $('.logo').addClass('minimized');
+        $('.logo').removeClass('col-9').addClass('col-6').addClass('minimized');
         newGameBtn.fadeOut();
         setTimeout(function () {
 
