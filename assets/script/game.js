@@ -43,8 +43,42 @@ class Game {
 
     translateQuestions(json) {
         json.results.forEach((questionJSON) => {
-            // TODO
-            this.createQuestion(questionJSON);
+
+            // Translate only if global variable is set
+            if(translate) {
+
+                // Prepare data to be translated
+                let data = '';
+                data += questionJSON.question + '||';
+                data += questionJSON.correct_answer + '||';
+                data += questionJSON.incorrect_answers[0] + '||';
+                data += questionJSON.incorrect_answers[0] + '||';
+                data += questionJSON.incorrect_answers[0];
+
+                $.ajax({
+                    url: 'https://translate.yandex.net/api/v1.5/tr.json/translate?lang=it&key=trnsl.1.1.20190404T223555Z.8dc52d79cdc709a3.0cacf308c8148501b80f342dd301cdbe03225b1c&text=' + data,
+                    success: (data) => {
+
+                        const jsonData = data.text[0].split('||');
+
+                        this.createQuestion({
+                            'question': jsonData[0],
+                            'correct_answer': jsonData[1],
+                            'incorrect_answers': [
+                                jsonData[2],
+                                jsonData[3],
+                                jsonData[4],
+                            ],
+                        });
+
+                    },
+                });
+            } else {
+
+                // Otherwise just create a new english question
+                this.createQuestion(questionJSON);
+
+            }
         });
 
         // Init game
