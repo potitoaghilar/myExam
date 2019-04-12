@@ -1,6 +1,7 @@
 //https://translate.yandex.net/api/v1.5/tr.json/translate?text=hello&lang=it&key=trnsl.1.1.20190404T223555Z.8dc52d79cdc709a3.0cacf308c8148501b80f342dd301cdbe03225b1c
 
 requirejs(['assets/script/question']);
+requirejs(['assets/script/answer']);
 
 const difficulties = Object.freeze({
     'EASY': 0,
@@ -61,7 +62,16 @@ class Game {
     };
 
     createQuestion(questionData) {
-        this.questions.push(new Question(questionData['question'], questionData['correct_answer'], questionData['incorrect_answers']));
+
+        let answers = [];
+
+        // Create correct answer
+        answers.push(new Answer(randomInt(), questionData['correct_answer'], true));
+
+        // Create wrong answers
+        questionData['incorrect_answers'].forEach((answer) => answers.push(new Answer(randomInt(), answer)));
+
+        this.questions.push(new Question(questionData['question'], answers));
     }
 
     nextQuestion() {
@@ -106,7 +116,7 @@ class Game {
         let isCorrect = false;
 
         // Check answer
-        if($(".answer input:checked").first().val().toLowerCase() === this.questions[this.currentQuestion].correctAnswer.toLowerCase()) {
+        if(parseInt($(".answer input:checked").first().val()) === this.questions[this.currentQuestion].getCorrect().id) {
             isCorrect = true;
         }
 
@@ -141,9 +151,9 @@ class Game {
 
         const questionHTML = '<h3>' + this.questions[this.currentQuestion].question + '</h3>';
 
-        const answers = shuffle([].concat(this.questions[this.currentQuestion].incorrectAnswers).concat([this.questions[this.currentQuestion].correctAnswer]));
+        const answers = shuffle(this.questions[this.currentQuestion].answers);
         let answersHTML = '';
-        answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer + '"><span>' + answer + '</span></label>');
+        answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer.id + '"><span>' + answer.answer + '</span></label>');
 
         const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Avanti</button>';
 
@@ -167,7 +177,7 @@ class Game {
                     // Mark as wrong
                     selectedAnswer.parent().addClass('wrong');
                     // Highlight correct
-                    $(".answer input[value='" + this.questions[this.currentQuestion].correctAnswer + "']").first().parent().addClass('correct');
+                    $(".answer input[value=" + this.questions[this.currentQuestion].getCorrect().id + "]").first().parent().addClass('correct');
                 }
 
                 // Go to next question
