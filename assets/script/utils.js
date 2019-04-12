@@ -12,3 +12,8 @@ function shuffle(a) {
     }
     return a;
 }
+
+/**
+ * Random int from 0 to 100
+ * */
+randomInt = () => Math.floor(Math.random() * 101);

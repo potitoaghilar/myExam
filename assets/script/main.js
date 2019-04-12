@@ -1,6 +1,8 @@
 requirejs(['assets/script/game']);
 requirejs(['assets/script/utils']);
 
+let translate = false;
+
 $(document).ready(function() {
 
     const newGameBtn = $('#newGame');
