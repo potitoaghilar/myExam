@@ -189,7 +189,7 @@ class Game {
         let answersHTML = '';
         answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer.id + '"><span>' + answer.answer + '</span></label>');
 
-        const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Avanti</button>';
+        const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Next</button>';
 
         $('#game').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
 

@@ -10,9 +10,9 @@ $(document).ready(function() {
     newGameBtn.popover({
         content: () => {
 
-            const easyBtn = $('<button id="newGameEasy" type="button" class="btn btn-primary">Facile</button>');
-            const mediumBtn = $('<button id="newGameMedium" type="button" class="btn btn-warning mx-2">Medio</button>');
-            const difficulBtn = $('<button id="newGameDifficult" type="button" class="btn btn-danger">Difficile</button>');
+            const easyBtn = $('<button id="newGameEasy" type="button" class="btn btn-primary">Easy</button>');
+            const mediumBtn = $('<button id="newGameMedium" type="button" class="btn btn-warning mx-2">Medium</button>');
+            const difficulBtn = $('<button id="newGameDifficult" type="button" class="btn btn-danger">Difficult</button>');
 
             // Binds functions
             setTimeout(function() {
@@ -34,7 +34,7 @@ $(document).ready(function() {
         },
         html: true,
         placement: "bottom",
-        title: "Scegli il livello di difficoltà",
+        title: "Select difficulty",
     });
 
     function newGame(difficulty) {
