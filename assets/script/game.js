@@ -231,19 +231,19 @@ class Game {
 
         const risposteCorrette = this.answers.filter(x => x === true).length;
 
-        const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Game.questionAmount + '</span></div>';
+        const result = '<div class="summaryLabel">Correct answers</div><div class="summary">' + risposteCorrette + '<span>/' + Game.questionAmount + '</span></div>';
         let comment = '';
         if(risposteCorrette === Game.questionAmount) {
-            comment = 'Grande, le sai tutte!';
+            comment = 'Great, you\'re awesome!';
         } else {
-            comment = 'Si può sempre migliorare!';
+            comment = 'You can do better, i know!';
         }
         comment = '<div class="mt-3 mb-5 comment">' + comment + '</div>';
 
         $('#game').html(result + comment).fadeIn();
 
         setTimeout(() => {
-            $('#newGame').text('Riprova').click(function() {
+            $('#newGame').text('Try again').click(function() {
                 location.reload();
             }).fadeIn();
         }, 1500);
