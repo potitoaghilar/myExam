@@ -1,6 +1,5 @@
 body {
-  background: #eaecfa;
-}
+  background: #eaecfa; }
 
 .loader {
   width: 250px;
@@ -16,39 +15,31 @@ body {
   font-weight: 900;
   color: #28913b;
   letter-spacing: 0.2em;
-  font-size: medium;
-}
-.loader::before, .loader::after {
-  content: "";
-  display: block;
-  width: 15px;
-  height: 15px;
-  background: #28913b;
-  position: absolute;
-  animation: load 0.7s infinite alternate ease-in-out;
-}
-.loader::before {
-  top: 0;
-}
-.loader::after {
-  bottom: 0;
-}
+  font-size: medium; }
+  .loader::before, .loader::after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: #28913b;
+    position: absolute;
+    animation: load .7s infinite alternate ease-in-out; }
+  .loader::before {
+    top: 0; }
+  .loader::after {
+    bottom: 0; }
 
 @keyframes load {
   0% {
     left: 0;
     height: 30px;
-    width: 15px;
-  }
+    width: 15px; }
   50% {
     height: 8px;
-    width: 40px;
-  }
+    width: 40px; }
   100% {
     left: 235px;
     height: 30px;
-    width: 15px;
-  }
-}
+    width: 15px; } }
 
 /*# sourceMappingURL=loader.css.map */

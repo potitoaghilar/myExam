@@ -6559,7 +6559,9 @@ a.nav-link:hover {
   -o-transition: all .2s;
   transition: all .2s; }
 
-#game .answer:hover, #game .answer.selected, #game .answer.correct {
+#game .answer:hover,
+#game .answer.selected,
+#game .answer.correct {
   background-color: #28913b;
   color: #fff;
   border-color: #28913b; }
