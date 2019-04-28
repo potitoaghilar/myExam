@@ -162,14 +162,17 @@ class Game {
         $('#game').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
 
         // Add click listener to nextQuestion Button
-        $('#nextQuestion').click(() => {
+        const that = this;
+        $('#nextQuestion').click(function() {
+
+            $(this).unbind();
 
             const selectedAnswer = $(".answer input:checked").first();
 
             if(selectedAnswer.val() !== undefined) {
 
                 // Save user answer
-                let isCorrect = this.saveAnswer();
+                let isCorrect = that.saveAnswer();
 
                 // Mark correct and wrong answers
                 if(isCorrect) {
@@ -179,11 +182,11 @@ class Game {
                     // Mark as wrong
                     selectedAnswer.parent().addClass('wrong');
                     // Highlight correct
-                    $(".answer input[value=" + this.questions[this.currentQuestion].getCorrect().id + "]").first().parent().addClass('correct');
+                    $(".answer input[value=" + that.questions[that.currentQuestion].getCorrect().id + "]").first().parent().addClass('correct');
                 }
 
                 // Go to next question
-                setTimeout(() => this.nextQuestion(), 1000);
+                setTimeout(() => that.nextQuestion(), 1000);
 
             }
         });
@@ -201,14 +204,13 @@ class Game {
 
         const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Game.questionAmount + '</span></div>';
         let comment = '';
-        if(risposteCorrette === Game.questionAmount) {
+        console.log(this.points);
+        if(this.points == 30) {
             comment = 'Hai passato la prova. Congratulazioni!';
+        } else if (this.points >= 18 && this.points < 30) {
+            comment = 'Hai superato la prova';
         } else {
-            if(risposteCorrette >= 18 && risposteCorrette < 30) {
-                comment = 'Hai superato la prova';
-            } else {
-                comment = 'NON hai superato la prova';
-            }
+            comment = 'NON hai superato la prova';
         }
         comment = '<div class="mt-3 mb-5 comment">' + comment + '</div>';
 
