@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BrainQuiz - Test your knowledge</title>
+    <title>Politecnico di Bari - Esame</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/style/loader.css">
     <link rel="stylesheet" href="assets/style/radiobutton.css">
@@ -10,43 +10,44 @@
 </head>
 <body>
 
-    <nav class="m-3">
-        <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <a id="newGameNav" class="nav-link" href="/index.html" style="display: none;">New Game</a>
-            </li>
-            <li class="nav-item text-secondary">
-                <a class="nav-link" href="info.html">Info</a>
-            </li>
-        </ul>
-    </nav>
+    <section>
+        <div id="time" class="time float-right text-center">
+            <div>Tempo rimanente:</div>
+            <span class="value"><span class="mins">00</span>:<span class="secs">00</span></span>
+        </div>
+    </section>
 
     <section class="container main-container">
         <div class="col text-center">
 
-            <div class="col-5 mb-5 mx-auto">
+            <div class="col-5 my-5 mx-auto">
                 <div class="row">
                     <div class="col-9 mx-auto logo">
-                        <img src="assets/img/logo.png" alt="brainquiz">
+                        <img class="main-logo" src="assets/img/logo.png">
                     </div>
                     <div class="my-auto points" style="width: 0; opacity: 0;">
-                        <div>Score:</div>
-                        <span class="value">0</span>
+                        <div>Voto:</div>
+                        <span class="value">0</span> / 30
                     </div>
                 </div>
             </div>
 
+            <!-- Exam title -->
+            <h3 class="mb-5 pb-5 exam-title">
+                "Ingegneria del Software (II modulo): Fondamenti Web"
+            </h3>
+
             <!-- Loader -->
             <div id="loader" class="mt-5" style="display: none; height: 300px;">
-                <div class="loader">Loading</div>
+                <div class="loader">Caricamento</div>
             </div>
 
             <!-- Main game container -->
             <div id="game" class="mx-auto w-75" style="display: none;"></div>
 
-            <!-- New Game Button -->
+            <!-- New Exam Button -->
             <div class="col text-center">
-                <button id="newGame" type="button" class="btn btn-primary px-4 py-2">New Game</button>
+                <button id="newSession" type="button" class="btn btn-primary px-4 py-2">Avvia esame</button>
             </div>
 
         </div>
@@ -54,7 +55,7 @@
 
     <footer>
         <small>
-            Made by Potito Aghilar
+            Politecnico di Bari
         </small>
     </footer>
 

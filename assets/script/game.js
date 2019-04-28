@@ -1,19 +1,6 @@
-//https://translate.yandex.net/api/v1.5/tr.json/translate?text=hello&lang=it&key=trnsl.1.1.20190404T223555Z.8dc52d79cdc709a3.0cacf308c8148501b80f342dd301cdbe03225b1c
 
 requirejs(['assets/script/question']);
 requirejs(['assets/script/answer']);
-
-const difficulties = Object.freeze({
-    'EASY': 0,
-    'MEDIUM': 1,
-    'HARD': 2,
-});
-
-const pointsMap = Object.freeze({
-    0: 20, // EASY
-    1: 50, // MEDIUM
-    2: 100, // HARD
-});
 
 class Game {
 
@@ -24,76 +11,52 @@ class Game {
     constructor(difficulty) {
         console.log('New game started in mode ' + difficulty);
 
-        this.difficulty = swap(difficulties)[difficulty].toLowerCase();
         this.questions = [];
         this.currentQuestion = -1;
         this.answers = [];
         this.points = 0;
-        this.difficultyVal = difficulty; // Used in points computation
+
+        this.timer = undefined;
+        this.time = 30 * 60;
     }
 
     fetchQuestions() {
 
         $.ajax({
-            url: 'https://opentdb.com/api.php?amount=' + Game.questionAmount + '&category=' + Game.category + '&type=' + Game.gameType + '&difficulty=' + this.difficulty,
-            success: (data) => this.translateQuestions(data),
+            url: 'https://opentdb.com/api.php?amount=' + Game.questionAmount + '&category=' + Game.category + '&type=' + Game.gameType + '&difficulty=easy',
+            success: (data) => {
+
+                data['results'].forEach((question, index) => this.createQuestion(question));
+
+                // Init game
+                this.updateTimerUI();
+                $('#loader').fadeOut();
+                setTimeout(() => {
+
+                    // Let's mix questions :)
+                    this.questions = shuffle(this.questions);
+
+                    // First question!
+                    this.nextQuestion();
+                    $('#newGameNav').fadeIn();
+                    $('#time').fadeIn();
+                    this.timer = setInterval(() => {
+                        this.time--;
+
+                        this.updateTimerUI();
+
+                        if(this.time <= 0) {
+                            this.closeGame();
+                        }
+
+                    }, 1000);
+
+                }, 400);
+
+            },
         });
 
     }
-
-    translateQuestions(json) {
-        json.results.forEach((questionJSON) => {
-
-            // Translate only if global variable is set
-            if(translate) {
-
-                // Prepare data to be translated
-                let data = '';
-                data += questionJSON.question + '||';
-                data += questionJSON.correct_answer + '||';
-                data += questionJSON.incorrect_answers[0] + '||';
-                data += questionJSON.incorrect_answers[0] + '||';
-                data += questionJSON.incorrect_answers[0];
-
-                $.ajax({
-                    url: 'https://translate.yandex.net/api/v1.5/tr.json/translate?lang=it&key=trnsl.1.1.20190404T223555Z.8dc52d79cdc709a3.0cacf308c8148501b80f342dd301cdbe03225b1c&text=' + data,
-                    success: (data) => {
-
-                        const jsonData = data.text[0].split('||');
-
-                        this.createQuestion({
-                            'question': jsonData[0],
-                            'correct_answer': jsonData[1],
-                            'incorrect_answers': [
-                                jsonData[2],
-                                jsonData[3],
-                                jsonData[4],
-                            ],
-                        });
-
-                    },
-                });
-            } else {
-
-                // Otherwise just create a new english question
-                this.createQuestion(questionJSON);
-
-            }
-        });
-
-        // Init game
-        $('#loader').fadeOut();
-        setTimeout(() => {
-
-            // Let's mix questions :)
-            this.questions = shuffle(this.questions);
-
-            // First question!
-            this.nextQuestion();
-            $('#newGameNav').fadeIn();
-
-        }, 400);
-    };
 
     createQuestion(questionData) {
 
@@ -129,11 +92,7 @@ class Game {
                 break;
             case this.questions.length - 1:
                 // This is the last question. So show results
-                gameElem.fadeOut();
-                $('#newGameNav').fadeOut();
-                setTimeout(() => {
-                    this.showResults();
-                }, 400);
+                this.closeGame();
                 break;
             default:
                 // Next question
@@ -143,6 +102,20 @@ class Game {
                 }, 400);
         }
 
+    }
+
+    closeGame() {
+        clearInterval(this.timer);
+        $('#game').fadeOut();
+        $('#newGameNav').fadeOut();
+        setTimeout(() => {
+            this.showResults();
+        }, 400);
+    }
+
+    updateTimerUI() {
+        $('.mins').text(pad(Math.floor(this.time / 60), 2));
+        $('.secs').text(pad(Math.floor(this.time % 60), 2));
     }
 
     saveAnswer() {
@@ -168,12 +141,7 @@ class Game {
         if(answer) {
 
             // Add points to total
-            this.points = this.points + pointsMap[this.difficultyVal];
-
-        } else {
-
-            // Divide total points by 2
-            this.points = this.points / 2;
+            this.points = this.points + 3;
 
         }
 
@@ -189,7 +157,7 @@ class Game {
         let answersHTML = '';
         answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer.id + '"><span>' + answer.answer + '</span></label>');
 
-        const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Next</button>';
+        const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Successiva</button>';
 
         $('#game').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
 
@@ -231,19 +199,23 @@ class Game {
 
         const risposteCorrette = this.answers.filter(x => x === true).length;
 
-        const result = '<div class="summaryLabel">Correct answers</div><div class="summary">' + risposteCorrette + '<span>/' + Game.questionAmount + '</span></div>';
+        const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Game.questionAmount + '</span></div>';
         let comment = '';
         if(risposteCorrette === Game.questionAmount) {
-            comment = 'Great, you\'re awesome!';
+            comment = 'Hai passato la prova. Congratulazioni!';
         } else {
-            comment = 'You can do better, i know!';
+            if(risposteCorrette >= 18 && risposteCorrette < 30) {
+                comment = 'Hai superato la prova';
+            } else {
+                comment = 'NON hai superato la prova';
+            }
         }
         comment = '<div class="mt-3 mb-5 comment">' + comment + '</div>';
 
         $('#game').html(result + comment).fadeIn();
 
         setTimeout(() => {
-            $('#newGame').text('Try again').click(function() {
+            $('#newSession').text('Home').click(function() {
                 location.reload();
             }).fadeIn();
         }, 1500);

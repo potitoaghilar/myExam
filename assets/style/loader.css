@@ -13,7 +13,7 @@ body {
   font-family: helvetica, arial, sans-serif;
   text-transform: uppercase;
   font-weight: 900;
-  color: #28913b;
+  color: #188886;
   letter-spacing: 0.2em;
   font-size: medium; }
   .loader::before, .loader::after {
@@ -21,7 +21,7 @@ body {
     display: block;
     width: 15px;
     height: 15px;
-    background: #28913b;
+    background: #188886;
     position: absolute;
     animation: load .7s infinite alternate ease-in-out; }
   .loader::before {

@@ -1,5 +1,5 @@
-$primary: #28913b;
-$secondary: #7ad41d;
+$primary: #188886;
+$secondary: #136967;
 //$tertiary: #c7eb00;
 
 @import "bootstrap/bootstrap";
@@ -9,13 +9,6 @@ html body {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 40px;
-}
-
-nav {
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 999;
 }
 
 .main-container {
@@ -40,10 +33,6 @@ nav {
   max-width: fit-content;
 }
 
-.logo.minimized img {
-  width: 60%;
-}
-
 footer {
   position: fixed;
   bottom: 0;
@@ -60,7 +49,7 @@ a.nav-link:hover {
   color: $secondary !important;
 }
 
-#newGame {
+#newSession {
   font-size: 20px;
 }
 
@@ -75,7 +64,7 @@ a.nav-link:hover {
 #game .answer {
   margin: 10px 0;
   padding: 15px;
-  border: 1px solid #6ca977;
+  border: 1px solid $primary;
   border-radius: 6px;
   box-shadow: 0 0 15px rgba(0, 128, 0, 0.09);
   cursor: pointer;
@@ -131,6 +120,17 @@ a.nav-link:hover {
     font-size: xx-large;
   }
 
+}
+
+.time {
+
+  display: none;
+  margin-right: 20px;
+  margin-top: -25px;
+
+  .value {
+    font-size: xx-large;
+  }
 }
 
 .info {
