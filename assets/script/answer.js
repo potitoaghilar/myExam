@@ -1,3 +1,6 @@
+/**
+ * Model of a single Answer
+ */
 
 class Answer {
 

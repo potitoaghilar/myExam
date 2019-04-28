@@ -1,4 +1,8 @@
 
+/**
+ * FUNCTIONS USEFUL TO HELP THE OPERATIONS ON DATAS
+ */
+
 let swap = (o,r={})=> Object.keys(o).map(x=>r[o[x]]=x)&&r;
 
 /**
