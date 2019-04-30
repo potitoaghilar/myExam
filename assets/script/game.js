@@ -204,13 +204,13 @@ class Game {
         const that = this;
         $('#nextQuestion').click(function() {
 
-            // Unbind the click action to avoid answer spamming! (IMPORTANT)
-            $(this).unbind();
-
             // Get the selected answer that the user selected
             const selectedAnswer = $(".answer input:checked").first();
 
             if(selectedAnswer.val() !== undefined) {
+
+                // Unbind the click action to avoid answer spamming! (IMPORTANT)
+                $(this).unbind();
 
                 // Save user answer
                 let isCorrect = that.saveAnswer();
