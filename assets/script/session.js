@@ -1,79 +1,35 @@
 
-// Required components
-requirejs(['assets/script/question']);
-requirejs(['assets/script/answer']);
-
 /***
- * The main class Game
+ * The main class Session
  */
-class Game {
+class Session {
 
-    // Static properties of the game itself, these depends from API specifications
-    static get questionAmount() { return 10; }
-    static get category() { return 18; }
-    static get gameType() { return 'multiple'; }
+    constructor() {
 
-    constructor(difficulty) {
-        console.log('New game started in mode ' + difficulty);
-
-        // Set the main fields of the object Game we are creating in this moment
+        // Set the main fields of the object Session we are creating in this moment
         this.questions = [];
         this.currentQuestion = -1;
         this.answers = [];
-        this.points = 0;
 
         // The timer fields are useful for remaining time tracking
         this.timer = undefined;
-        this.time = 30 * 60;
+        this.time = API.getTime();
     }
 
-    // Function used to start the game. This fetches the answers from API and start the execution of the session
-    fetchQuestions() {
+    // Function used to start the session. This fetches the answers from API and start the execution of the session
+    async fetchQuestions() {
 
-        // Make an HTTP request to provided API url with the params choosen from us: questions amount, category, and difficulty
-        $.ajax({
-            url: 'https://opentdb.com/api.php?amount=' + Game.questionAmount + '&category=' + Game.category + '&type=' + Game.gameType + '&difficulty=easy',
-            success: (data) => {
+        // Make an HTTP request to provided API url
+        const questions = await API.getQuestions();
 
-                // Create the questions from API response
-                data['results'].forEach((question, index) => this.createQuestion(question));
+        // Create the questions from API response
+        questions['results'].forEach((question, index) => this.createQuestion(question));
 
-                // Init game
+        // Load question number in UI
+        $('.questions .questions-total').text(this.questions.length);
 
-                // Update the user interface timer
-                this.updateTimerUI();
-                // Hide the loader
-                $('#loader').fadeOut();
-                setTimeout(() => {
-
-                    // Let's mix questions :)
-                    this.questions = shuffle(this.questions);
-
-                    // Show first question!
-                    this.nextQuestion();
-                    $('#newGameNav').fadeIn();
-                    $('#time').fadeIn();
-
-                    // Timer that update the remaining time
-                    this.timer = setInterval(() => {
-
-                        // Decrease the time
-                        this.time--;
-
-                        // Update changes to UI
-                        this.updateTimerUI();
-
-                        // Close the session if the time is out
-                        if(this.time <= 0) {
-                            this.closeGame();
-                        }
-
-                    }, 1000);
-
-                }, 400);
-
-            },
-        });
+        // Init session
+        this.initSession();
 
     }
 
@@ -92,10 +48,46 @@ class Game {
         this.questions.push(new Question(questionData['question'], answers));
     }
 
+    initSession() {
+
+        // Update the user interface timer
+        this.updateTimerUI();
+        // Hide the loader
+        $('#loader').fadeOut();
+
+        setTimeout(() => {
+
+            // Let's mix questions
+            this.questions = shuffle(this.questions);
+
+            // Show first question
+            this.nextQuestion();
+            $('#time').fadeIn();
+
+            // Timer that update the remaining time
+            this.timer = setInterval(() => {
+
+                // Decrease the time
+                this.time--;
+
+                // Update changes to UI
+                this.updateTimerUI();
+
+                // Close the session if the time is out
+                if(this.time <= 0) {
+                    this.closeSession();
+                }
+
+            }, 1000);
+
+        }, 400);
+
+    }
+
     nextQuestion() {
 
         // Variables
-        const gameElem = $('#game');
+        const sessionElem = $('#session');
         const next = () => {
 
             // Increment question counter and update UI
@@ -103,7 +95,7 @@ class Game {
             this.draw();
 
             // Fadein animation
-            gameElem.fadeIn();
+            sessionElem.fadeIn();
         };
 
         // Choose if the application must show the first answer, a generic answers or the final result
@@ -111,15 +103,15 @@ class Game {
             case -1:
                 // First question
                 next();
-                Game.showPoints();
+                Session.showQuestionsCounter();
                 break;
             case this.questions.length - 1:
                 // This is the last question. So show results
-                this.closeGame();
+                this.closeSession();
                 break;
             default:
                 // Next question
-                gameElem.fadeOut();
+                sessionElem.fadeOut();
                 setTimeout(() => {
                     next();
                 }, 400);
@@ -128,14 +120,13 @@ class Game {
     }
 
     // Close the session and show the results
-    closeGame() {
+    closeSession() {
 
         // Remove the timer
         clearInterval(this.timer);
 
         // Hide session page
-        $('#game').fadeOut();
-        $('#newGameNav').fadeOut();
+        $('#session').fadeOut();
 
         // Show results page
         setTimeout(() => {
@@ -177,13 +168,13 @@ class Game {
             this.points = this.points + 3;
 
         }
-
-        // Update UI
-        $('.points .value').animateNumber({ number: this.points }).prop('number', this.points);
     }
 
     // This method updates the UI showing the question on the screen
     draw() {
+
+        // Update question number on UI
+        $('.questions-done').text(this.currentQuestion + 1);
 
         // Generate the question HTML
         const questionHTML = '<h3>' + this.questions[this.currentQuestion].question + '</h3>';
@@ -198,7 +189,7 @@ class Game {
         const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Successiva</button>';
 
         // Prints all the generated HTML to screen
-        $('#game').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
+        $('#session').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
 
         // Add click listener to nextQuestion Button
         const that = this;
@@ -234,8 +225,8 @@ class Game {
     }
 
     // Show points to screen with an incremental animation
-    static showPoints() {
-        $('.points').animate({width: '40%'}, 400).fadeTo(400, 1);
+    static showQuestionsCounter() {
+        $('.questions').animate({width: '40%'}, 400).fadeTo(400, 1);
     }
 
     // Show results page on UI
@@ -245,7 +236,7 @@ class Game {
         const risposteCorrette = this.answers.filter(x => x === true).length;
 
         // Generate HTML for correct answers text
-        const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Game.questionAmount + '</span></div>';
+        const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Session.questionAmount + '</span></div>';
 
         // Generate HTML for comment text based on collected points
         let comment = '';
@@ -259,7 +250,7 @@ class Game {
         comment = '<div class="mt-3 mb-5 comment">' + comment + '</div>';
 
         // Show HTML on UI
-        $('#game').html(result + comment).fadeIn();
+        $('#session').html(result + comment).fadeIn();
 
         // Show Home button after a delay of 1.5 seconds
         setTimeout(() => {

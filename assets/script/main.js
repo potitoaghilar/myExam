@@ -1,19 +1,21 @@
 
-// Required components useful to execution of web application
-requirejs(['assets/script/game']);
-requirejs(['assets/script/utils']);
-
 $(document).ready(function() {
 
-    // Start a new session when we click on "Avvia Esame"
-    $('#newSession').click(newGame);
+    // Show exam title
+    $('#exam-title').text(API.getExamTitle());
 
-    function newGame() {
+    // Get "Avvia Esame" button
+    const newSessionBtn = $('#newSession');
+
+    // Start a new session when we click on "Avvia Esame"
+    newSessionBtn.click(newSession);
+
+    function newSession() {
 
         // Prepare environment with some visual effects
         $('.logo').removeClass('col-9').addClass('col-6');
         $('.exam-title').fadeOut();
-        $('#newSession').fadeOut();
+        newSessionBtn.fadeOut();
 
         // Timer useful to wait the transitions triggered above
         setTimeout(function () {
@@ -21,11 +23,11 @@ $(document).ready(function() {
             // Show the Loading spinner
             $('#loader').fadeIn();
 
-            // Instantiate game
-            const game = new Game();
+            // Instantiate session
+            const session = new Session();
 
             // Fetch the questions from external API
-            game.fetchQuestions();
+            session.fetchQuestions();
 
         }, 1000);
 

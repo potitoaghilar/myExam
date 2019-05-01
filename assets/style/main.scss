@@ -49,7 +49,7 @@ a.nav-link:hover {
   color: $secondary !important;
 }
 
-#newSession {
+.mainButton {
   font-size: 20px;
 }
 
@@ -57,11 +57,11 @@ a.nav-link:hover {
   padding: 13px !important;
 }
 
-.game h3 {
+#session h3 {
   line-height: 40px;
 }
 
-#game .answer {
+#session .answer {
   margin: 10px 0;
   padding: 15px;
   border: 1px solid $primary;
@@ -75,15 +75,15 @@ a.nav-link:hover {
   transition: all .2s;
 }
 
-#game .answer:hover,
-#game .answer.selected,
-#game .answer.correct {
+#session .answer:hover,
+#session .answer.selected,
+#session .answer.correct {
   background-color: $primary;
   color: #fff;
   border-color: $primary;
 }
 
-#game .answer.wrong {
+#session .answer.wrong {
   background-color: #ad1c1c;
   color: #fff;
   border-color: #ad1c1c;
@@ -110,13 +110,13 @@ a.nav-link:hover {
   font-size: x-large;
 }
 
-.points {
+.questions {
   border-left: 1px solid;
   border-image: linear-gradient(#fff, mix($primary, #000), #fff) 0 100%;
   padding: 10px 0;
   overflow: hidden;
 
-  .value {
+  .questions-done {
     font-size: xx-large;
   }
 
@@ -135,6 +135,17 @@ a.nav-link:hover {
 
 .info {
   font-size: x-large;
+}
+
+#login-form {
+  display: inline-grid;
+
+  input {
+    border: none;
+    border-bottom: 2px solid #178886;
+    margin-bottom: 20px;
+    outline: none;
+  }
 }
 
 ///////////////////
