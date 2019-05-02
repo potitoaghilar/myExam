@@ -25,16 +25,20 @@
                     <div class="col-9 mx-auto logo">
                         <img class="main-logo" src="assets/img/logo.png">
                     </div>
-                    <div class="my-auto questions" style="width: 0; opacity: 0;">
-                        <div>Domanda:</div>
-                        <span class="questions-done">0</span> / <span class="questions-total">0</span>
+					<div id="col-9 mx-auto" class="esaminato" style='display:none'>
+						<div id="labelname">Nome</div>
+						<div id="labelsurname">Cognome</div>
+						<div id="labelmatricola">Matricola</div></div>
+                    <div class="my-auto points" style="width: 0; opacity: 0;">
+                        <div>Voto:</div>
+                        <span class="value">0</span> / 30
                     </div>
                 </div>
             </div>
 
             <!-- Exam title -->
-            <h3 id="exam-title" class="mb-5 exam-title">
-
+            <h3 class="mb-5 pb-5 exam-title">
+                "Ingegneria del Software (II modulo): Fondamenti Web"
             </h3>
 
             <!-- Loader -->
@@ -42,21 +46,15 @@
                 <div class="loader">Caricamento</div>
             </div>
 
-            <!-- Main session container -->
-            <div id="session" class="mx-auto w-75" style="display: none;"></div>
-
-            <!-- Input -->
-            <div id="login-form">
-                <input id="email" type="text" placeholder="Email" />
-                <input id="password" type="password" placeholder="Password" />
-                <div class="col text-center">
-                    <button id="login-btn" type="button" class="btn btn-primary mainButton px-4 py-2">Accedi</button>
-                </div>
-            </div>
+            <!-- Main game container -->
+            <div id="game" class="mx-auto w-75" style="display: none;"></div>
 
             <!-- New Exam Button -->
-            <div class="col text-center" style="display: none">
-                <button id="newSession" type="button" class="btn btn-primary mainButton px-4 py-2">Avvia esame</button>
+            <div class="col text-center">
+				<input type="text" id="nome"  placeholder="Inserisci Nome">
+				<input type="text" id="cognome"  placeholder="Inserisci Cognome">
+				<input type="text" id="matricola"  placeholder="Inserisci Matricola">
+                <button id="newSession" type="button" class="btn btn-primary px-4 py-2">Avvia esame</button>
             </div>
 
         </div>
@@ -71,13 +69,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="assets/script/require.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js"></script>
-
-    <script src="assets/script/answer.js"></script>
-    <script src="assets/script/api.js"></script>
-    <script src="assets/script/question.js"></script>
-    <script src="assets/script/utils.js"></script>
-    <script src="assets/script/session.js"></script>
     <script src="assets/script/main.js"></script>
 </body>
 </html>
