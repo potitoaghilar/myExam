@@ -2,48 +2,43 @@
 
 class API {
 
-    static get baseEndpoint() { return 'http://localhost'; }
+    static get baseEndpoint() { return 'http://192.168.43.103:8888'; }
     static get ENDPOINTS() {
         return {
-
-            LOGIN: self.baseEndpoint + '/login',
-
-            TITLE: '/getExamTitle',
-
-            TIME: self.baseEndpoint + '/time',
-            QUESTIONS: self.baseEndpoint + '/questions',
-            SUBMIT: self.baseEndpoint + '/submit',
-
+            LOGIN: API.baseEndpoint + '/api/login.php',
+            TITLE: API.baseEndpoint + '/api/examTitle.php',
+            TIME: API.baseEndpoint + '/api/time.php',
+            QUESTIONS: API.baseEndpoint + '/api/questions.php',
+            SUBMIT: API.baseEndpoint + '/api/submit.php',
         };
     }
 
-    static login() {
+    static async login() {
         // TODO
     }
 
-    static getExamTitle() {
-        return "Ingegneria del Software (II modulo): Fondamenti Web";
-
-        // TODO
+    static async getExamTitle() {
+        return JSON.parse(await $.ajax({
+            url: this.ENDPOINTS.TITLE,
+        })).title;
     }
 
-    static getTime() {
-        return 30 * 60;
-
-        // TODO
+    static async getTime() {
+        return await $.ajax({
+            url: this.ENDPOINTS.TIME,
+        });
     }
 
     static async getQuestions() {
         return await $.ajax({
-            url: 'https://opentdb.com/api.php?amount=10&category=18&type=multiple&difficulty=easy',
+            url: this.ENDPOINTS.QUESTIONS,
         });
-
-        // TODO
     }
 
-    static submit(answers) {
-        return true;
-        // TODO
+    static async submit(answers) {
+        return await $.ajax({
+            url: this.ENDPOINTS.SUBMIT,
+        });
     }
 
 }

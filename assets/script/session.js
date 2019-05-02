@@ -180,10 +180,8 @@ class Session {
     // Update the points
     updatePoints(answer) {
         if(answer) {
-
             // Add points to total
-            this.points = this.points + 3;
-
+            this.points = this.points + Math.round(30 / this.questions.length * 100) / 100;
         }
     }
 

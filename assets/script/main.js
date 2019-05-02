@@ -1,8 +1,8 @@
 
-$(document).ready(function() {
+$(document).ready(async function () {
 
     // Show exam title
-    $('#exam-title').text(API.getExamTitle());
+    $('#exam-title').text('"' + (await API.getExamTitle()) + '"');
 
     // Get "Avvia Esame" button
     const newSessionBtn = $('#newSession');
