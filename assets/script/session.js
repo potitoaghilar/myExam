@@ -4,12 +4,16 @@
  */
 class Session {
 
+    static get PREVIOUS_QUESTION() { return -1; }
+    static get NEXT_QUESTION() { return 1; }
+
     constructor() {
 
         // Set the main fields of the object Session we are creating in this moment
         this.questions = [];
         this.currentQuestion = -1;
         this.answers = [];
+        this.vote = 0;
 
         // The timer fields are useful for remaining time tracking
         this.timer = undefined;
@@ -52,6 +56,7 @@ class Session {
 
         // Update the user interface timer
         this.updateTimerUI();
+
         // Hide the loader
         $('#loader').fadeOut();
 
@@ -60,41 +65,57 @@ class Session {
             // Let's mix questions
             this.questions = shuffle(this.questions);
 
+            // Show question count
+            Session.showQuestionsCounter();
+
             // Show first question
-            this.nextQuestion();
+            this.changeQuestion(Session.NEXT_QUESTION);
+
+            // Show timer
             $('#time').fadeIn();
 
-            // Timer that update the remaining time
-            this.timer = setInterval(() => {
-
-                // Decrease the time
-                this.time--;
-
-                // Update changes to UI
-                this.updateTimerUI();
-
-                // Close the session if the time is out
-                if(this.time <= 0) {
-                    this.closeSession();
-                }
-
-            }, 1000);
+            // Set timer that update the remaining time
+            this.timer = this.setTimer();
 
         }, 400);
 
     }
 
-    nextQuestion() {
+    setTimer() {
+        return setInterval(() => {
+
+            // Decrease the time
+            this.time--;
+
+            // Update changes to UI
+            this.updateTimerUI();
+
+            // Close the session if the time is out
+            if(this.time <= 0) {
+                this.closeSession();
+            }
+
+        }, 1000);
+    }
+
+    changeQuestion(nextOrPrevious) {
 
         // Variables
-        const sessionElem = $('#session');
-        const next = () => {
+        const change = async () => {
+
+            const sessionElem = $('#session');
+
+            // Fade out only if required
+            if (this.currentQuestion > -1) {
+                sessionElem.fadeOut();
+                await sleep(400);
+            }
 
             // Increment question counter and update UI
-            this.currentQuestion++;
+            this.currentQuestion += nextOrPrevious;
             this.draw();
 
-            // Fadein animation
+            // Fade in animation
             sessionElem.fadeIn();
         };
 
@@ -102,19 +123,15 @@ class Session {
         switch (this.currentQuestion) {
             case -1:
                 // First question
-                next();
-                Session.showQuestionsCounter();
+                change();
                 break;
             case this.questions.length - 1:
                 // This is the last question. So show results
                 this.closeSession();
                 break;
             default:
-                // Next question
-                sessionElem.fadeOut();
-                setTimeout(() => {
-                    next();
-                }, 400);
+                // Change question
+                change();
         }
 
     }
@@ -186,45 +203,46 @@ class Session {
         answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer.id + '"><span>' + answer.answer + '</span></label>');
 
         // Generate the next question button HTML
-        const nextBtnHTML = '<button type="button" id="nextQuestion" class="btn btn-primary mt-3">Successiva</button>';
+        const prevBtnHTML = '<button type="button" data-action="previous" class="btn btn-primary mt-3 mr-3 changeQuestion ' + (this.currentQuestion == 0 ? 'disabled' : '') + '">Precedente</button>';
+        const nextBtnHTML = '<button type="button" data-action="next" class="btn btn-primary mt-3 changeQuestion ' + (this.currentQuestion == this.questions.length - 1 ? 'disabled' : '') + '">Successiva</button>';
 
         // Prints all the generated HTML to screen
-        $('#session').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + nextBtnHTML);
+        $('#session').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + prevBtnHTML + nextBtnHTML);
 
-        // Add click listener to nextQuestion Button
+        // Add click listener to changeQuestion Button
         const that = this;
-        $('#nextQuestion').click(function() {
+        $('.changeQuestion').click(function() {
 
-            // Get the selected answer that the user selected
-            const selectedAnswer = $(".answer input:checked").first();
+            // Change question
+            switch ($(this).attr('data-action')) {
+                case 'previous':
+                    if(that.currentQuestion > 0) {
+                        that.changeQuestion(Session.PREVIOUS_QUESTION);
 
-            if(selectedAnswer.val() !== undefined) {
+                        // Unbind the click action to avoid answer spamming! (IMPORTANT)
+                        $(this).unbind();
+                    }
+                    break;
+                case 'next':
+                    if(that.currentQuestion < that.questions.length - 1) {
+                        that.changeQuestion(Session.NEXT_QUESTION);
 
-                // Unbind the click action to avoid answer spamming! (IMPORTANT)
-                $(this).unbind();
-
-                // Save user answer
-                let isCorrect = that.saveAnswer();
-
-                // Mark correct and wrong answers
-                if(isCorrect) {
-                    // Mark as correct
-                    selectedAnswer.parent().addClass('correct')
-                } else {
-                    // Mark as wrong
-                    selectedAnswer.parent().addClass('wrong');
-                    // Highlight the correct answer
-                    $(".answer input[value=" + that.questions[that.currentQuestion].getCorrect().id + "]").first().parent().addClass('correct');
-                }
-
-                // Go to next question
-                setTimeout(() => that.nextQuestion(), 1000);
-
+                        // Unbind the click action to avoid answer spamming! (IMPORTANT)
+                        $(this).unbind();
+                    }
+                    break;
             }
+
         });
     }
 
-    // Show points to screen with an incremental animation
+    //// Get the selected answer that the user selected
+    //             const selectedAnswer = $(".answer input:checked").first();
+    //
+    //             // Save user answer
+    //             let isCorrect = that.saveAnswer();
+
+    // Show current and total question to screen
     static showQuestionsCounter() {
         $('.questions').animate({width: '40%'}, 400).fadeTo(400, 1);
     }
@@ -238,11 +256,11 @@ class Session {
         // Generate HTML for correct answers text
         const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Session.questionAmount + '</span></div>';
 
-        // Generate HTML for comment text based on collected points
+        // Generate HTML for comment text based on vote
         let comment = '';
-        if(this.points == 30) {
+        if(this.vote == 30) {
             comment = 'Hai passato la prova. Congratulazioni!';
-        } else if (this.points >= 18 && this.points < 30) {
+        } else if (this.vote >= 18 && this.vote < 30) {
             comment = 'Hai superato la prova';
         } else {
             comment = 'NON hai superato la prova';
