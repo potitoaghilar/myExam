@@ -4,18 +4,15 @@ $(document).ready(async function () {
     // Show exam title
     $('#exam-title').text('"' + (await API.getExamTitle()) + '"');
 
-    // Get "Avvia Esame" button
-    const newSessionBtn = $('#newSession');
-
     // Start a new session when we click on "Avvia Esame"
-    newSessionBtn.click(newSession);
+    $('#newSession').click(newSession);
 
     function newSession() {
 
         // Prepare environment with some visual effects
         $('.logo').removeClass('col-9').addClass('col-6');
         $('.exam-title').fadeOut();
-        newSessionBtn.fadeOut();
+        $('#login-form').fadeOut();
 
         // Timer useful to wait the transitions triggered above
         setTimeout(function () {
@@ -26,8 +23,13 @@ $(document).ready(async function () {
             // Instantiate session
             const session = new Session();
 
-            // Fetch the questions from external API
-            session.fetchQuestions();
+            // Get login datas
+            const nome = $('#nome').val();
+            const cognome = $('#cognome').val();
+            const matricola = $('#matricola').val();
+
+            // Check login
+            session.login(nome, cognome, matricola);
 
         }, 1000);
 

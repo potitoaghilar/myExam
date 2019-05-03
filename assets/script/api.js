@@ -2,7 +2,7 @@
 
 class API {
 
-    static get baseEndpoint() { return 'http://192.168.43.103:8888'; }
+    static get baseEndpoint() { return location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''); }
     static get ENDPOINTS() {
         return {
             LOGIN: API.baseEndpoint + '/api/login.php',
@@ -13,8 +13,12 @@ class API {
         };
     }
 
-    static async login() {
-        // TODO
+    static async login(nome, cognome, matricola) {
+        return JSON.parse(await $.ajax({
+            type: 'POST',
+            url: this.ENDPOINTS.LOGIN,
+            data: {nome, cognome, matricola},
+        }));
     }
 
     static async getExamTitle() {
@@ -24,9 +28,9 @@ class API {
     }
 
     static async getTime() {
-        return await $.ajax({
+        return JSON.parse(await $.ajax({
             url: this.ENDPOINTS.TIME,
-        });
+        })).time;
     }
 
     static async getQuestions() {

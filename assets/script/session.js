@@ -15,9 +15,32 @@ class Session {
         this.answers = [];
         this.vote = 0;
 
+        // Set timer
+        this.setTimer();
+    }
+
+    async setTimer() {
         // The timer fields are useful for remaining time tracking
         this.timer = undefined;
-        this.time = API.getTime();
+        this.time = await API.getTime();
+    }
+
+    async login(nome, cognome, matricola) {
+        const response = await API.login(nome, cognome, matricola);
+        if (response.status) {
+
+            // Fetch the questions from external API
+            this.fetchQuestions();
+
+        } else {
+
+            $('#error').modal('show').find('.modal-body').text(response.error);
+            $('.loader').fadeOut();
+            $('#login-form').delay(600).fadeIn();
+            $('#exam-title').delay(600).fadeIn();
+            $('.logo').removeClass('col-6').addClass('col-9');
+
+        }
     }
 
     // Function used to start the session. This fetches the answers from API and start the execution of the session
@@ -27,7 +50,7 @@ class Session {
         const questions = await API.getQuestions();
 
         // Create the questions from API response
-        questions['results'].forEach((question, index) => this.createQuestion(question));
+        questions.forEach((question, index) => this.createQuestion(question));
 
         // Load question number in UI
         $('.questions .questions-total').text(this.questions.length);
@@ -42,14 +65,11 @@ class Session {
         // Define a container for all generated questions
         let answers = [];
 
-        // Create correct answer
-        answers.push(new Answer(randomInt(), questionData['correct_answer'], true));
-
-        // Create wrong answers
-        questionData['incorrect_answers'].forEach((answer) => answers.push(new Answer(randomInt(), answer)));
+        // Create answers
+        questionData.answers.forEach((answer) => answers.push(new Answer(answer.id, answer.text)));
 
         // Put correct and wrong answers together
-        this.questions.push(new Question(questionData['question'], answers));
+        this.questions.push(new Question(questionData.id, questionData.text, answers));
     }
 
     initSession() {
@@ -75,13 +95,13 @@ class Session {
             $('#time').fadeIn();
 
             // Set timer that update the remaining time
-            this.timer = this.setTimer();
+            this.timer = this.setTimerTick();
 
-        }, 400);
+        }, 600);
 
     }
 
-    setTimer() {
+    setTimerTick() {
         return setInterval(() => {
 
             // Decrease the time
@@ -98,42 +118,22 @@ class Session {
         }, 1000);
     }
 
-    changeQuestion(nextOrPrevious) {
+    async changeQuestion(nextOrPrevious) {
 
-        // Variables
-        const change = async () => {
+        const sessionElem = $('#session');
 
-            const sessionElem = $('#session');
-
-            // Fade out only if required
-            if (this.currentQuestion > -1) {
-                sessionElem.fadeOut();
-                await sleep(400);
-            }
-
-            // Increment question counter and update UI
-            this.currentQuestion += nextOrPrevious;
-            this.draw();
-
-            // Fade in animation
-            sessionElem.fadeIn();
-        };
-
-        // Choose if the application must show the first answer, a generic answers or the final result
-        switch (this.currentQuestion) {
-            case -1:
-                // First question
-                change();
-                break;
-            case this.questions.length - 1:
-                // This is the last question. So show results
-                this.closeSession();
-                break;
-            default:
-                // Change question
-                change();
+        // Fade out only if required
+        if (this.currentQuestion > -1) {
+            sessionElem.fadeOut();
+            await sleep(400);
         }
 
+        // Increment question counter and update UI
+        this.currentQuestion += nextOrPrevious;
+        this.draw();
+
+        // Fade in animation
+        sessionElem.fadeIn();
     }
 
     // Close the session and show the results
@@ -158,35 +158,23 @@ class Session {
     }
 
     // Save the answer provided from user
-    saveAnswer() {
+    saveAnswer(value) {
 
-        let isCorrect = false;
+        const questionId = parseInt(this.questions[this.currentQuestion].id);
 
-        // Check if answer is correct
-        if(parseInt($(".answer input:checked").first().val()) === this.questions[this.currentQuestion].getCorrect().id) {
-            isCorrect = true;
-        }
-
-        // Update points in UI
-        this.updatePoints(isCorrect);
+        // Remove old given answer for this question
+        this.answers = this.answers.filter(x => x.questionId != questionId);
 
         // Save result
-        this.answers.push(isCorrect);
+        this.answers.push({questionId, answerId: parseInt(value)});
 
-        return isCorrect;
-
-    }
-
-    // Update the points
-    updatePoints(answer) {
-        if(answer) {
-            // Add points to total
-            this.points = this.points + Math.round(30 / this.questions.length * 100) / 100;
-        }
+        //console.log(this.answers);
     }
 
     // This method updates the UI showing the question on the screen
     draw() {
+
+        const that = this;
 
         // Update question number on UI
         $('.questions-done').text(this.currentQuestion + 1);
@@ -195,20 +183,34 @@ class Session {
         const questionHTML = '<h3>' + this.questions[this.currentQuestion].question + '</h3>';
 
         // Get and mix the answers for the provided question
-        const answers = shuffle(this.questions[this.currentQuestion].answers);
+        const answers = this.questions[this.currentQuestion].answers;
+
+        // Get already given answer
+        const givenAnswer = this.answers.find(x => x.questionId == this.questions[this.currentQuestion].id);
+
         // Generate the answers HTML through radio buttons
         let answersHTML = '';
-        answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer.id + '"><span>' + answer.answer + '</span></label>');
+        answers.forEach(answer => answersHTML += '<label class="radio answer"><input type="radio" name="answer" class="mr-2" value="' + answer.id + '" ' + (givenAnswer != undefined && givenAnswer.answerId == answer.id ? 'checked' : '') + '><span>' + answer.answer + '</span></label>');
 
         // Generate the next question button HTML
         const prevBtnHTML = '<button type="button" data-action="previous" class="btn btn-primary mt-3 mr-3 changeQuestion ' + (this.currentQuestion == 0 ? 'disabled' : '') + '">Precedente</button>';
         const nextBtnHTML = '<button type="button" data-action="next" class="btn btn-primary mt-3 changeQuestion ' + (this.currentQuestion == this.questions.length - 1 ? 'disabled' : '') + '">Successiva</button>';
+        let submitBtnHTML = '';
+
+        // Generate close exam button
+        if(this.currentQuestion == this.questions.length - 1) {
+            submitBtnHTML = '<button type="button" data-action="next" class="btn btn-danger mt-3 ml-3">Chiudi esame</button>';
+        }
 
         // Prints all the generated HTML to screen
-        $('#session').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + prevBtnHTML + nextBtnHTML);
+        $('#session').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + prevBtnHTML + nextBtnHTML + submitBtnHTML);
+
+        // Add handler to save answer given by user
+        $('#session .radio.answer input').change(function() {
+            that.saveAnswer($(this).val());
+        });
 
         // Add click listener to changeQuestion Button
-        const that = this;
         $('.changeQuestion').click(function() {
 
             // Change question

@@ -38,7 +38,7 @@
             </h3>
 
             <!-- Loader -->
-            <div id="loader" class="mt-5" style="display: none; height: 300px;">
+            <div id="loader" class="mt-5" style="display: none;">
                 <div class="loader">Caricamento</div>
             </div>
 
@@ -48,19 +48,35 @@
             <!-- Input -->
             <div id="login-form">
                 <input id="nome" type="text" placeholder="Nome" />
-                <input id="cognome" type="password" placeholder="Cognome" />
-                <input id="matricola" type="password" placeholder="Matricola" />
+                <input id="cognome" type="text" placeholder="Cognome" />
+                <input id="matricola" type="text" placeholder="Matricola" />
+                <!-- New Exam Button -->
                 <div class="col text-center">
-                    <button id="login-btn" type="button" class="btn btn-primary mainButton px-4 py-2">Avvia esame</button>
+                    <button id="newSession" type="button" class="btn btn-primary mainButton px-4 py-2">Avvia esame</button>
                 </div>
             </div>
 
-            <!-- New Exam Button -->
-            <div class="col text-center">
-                <button id="newSession" type="button" class="btn btn-primary mainButton px-4 py-2">Avvia esame</button>
-            </div>
-
         </div>
+
+        <div class="modal fade" id="error" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Errore</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <footer>
