@@ -26,9 +26,10 @@ class API {
     }
 
     static async getTime(matricola) {
-        return (await $.ajax({
+        const time = (await $.ajax({
             url: this.ENDPOINTS.TIME + matricola,
         })).time;
+        return time > 0 ? time : 0;
     }
 
     static async getQuestions() {

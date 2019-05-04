@@ -147,6 +147,10 @@ class Session {
         // Remove the timer
         clearInterval(this.timer);
 
+        // Set time to 0
+        this.time = 0;
+        this.updateTimerUI();
+
         // Hide session page
         $('#session').fadeOut();
 
