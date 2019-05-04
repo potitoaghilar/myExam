@@ -5,29 +5,29 @@ class API {
         return {
             LOGIN: API.baseEndpoint + '/api/login.php',
             TITLE: API.baseEndpoint + '/api/examTitle.php',
-            TIME: API.baseEndpoint + '/api/time.php',
+            TIME: API.baseEndpoint + '/api/time.php?matricola=',
             QUESTIONS: API.baseEndpoint + '/api/questions.php',
             SUBMIT: API.baseEndpoint + '/api/submit.php',
         };
     }
 
     static async login(nome, cognome, matricola) {
-        return JSON.parse(await $.ajax({
+        return await $.ajax({
             type: 'POST',
             url: this.ENDPOINTS.LOGIN,
             data: {nome, cognome, matricola},
-        }));
+        });
     }
 
     static async getExamTitle() {
-        return JSON.parse(await $.ajax({
+        return (await $.ajax({
             url: this.ENDPOINTS.TITLE,
         })).title;
     }
 
-    static async getTime() {
-        return JSON.parse(await $.ajax({
-            url: this.ENDPOINTS.TIME,
+    static async getTime(matricola) {
+        return (await $.ajax({
+            url: this.ENDPOINTS.TIME + matricola,
         })).time;
     }
 

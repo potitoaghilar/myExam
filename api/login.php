@@ -1,42 +1,30 @@
 <?php
 
-// TODO
-/*
-function generateRandomString($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-} */
+require 'requires.php';
 
-header("Content-Type: application/json; charset=UTF-8");
+$matricola = $_POST['matricola'];
+$nome = $_POST['nome'];
+$cognome = $_POST['cognome'];
 
-$matricola=$_POST['matricola'];
-$nome=$_POST['nome'];
-$cognome=$_POST['cognome'];
-
-class response{
+class Response {
 	public $status;
 	public $message;
 }
 
-$message = new response();
+$message = new Response();
 
 // Creo la connessione con il db
-$connect = new mysqli('localhost:8889','root','root','esame');
+$connect = Database::getInstance();
 
 // Eseguo la query per prelevare le domande
 $insertuserdata = $connect->query("Insert into users (matricola,nome,cognome,start) values ('".$matricola."','".$nome."','".$cognome."',NOW())");
 if($insertuserdata){
-	$message->status="succes";
-	$message->message="Successo";
+	$message->status = "success";
+	$message->message = "Successo";
 }
 else{
-	$message->status="error";
-	$message->message="Con questa matricola, hai gi&agrave; eseguito il test";
+	$message->status = "error";
+	$message->message = "Con questa matricola, hai gi&agrave; eseguito il test";
 }
 
 echo json_encode($message);
@@ -57,4 +45,3 @@ echo json_encode([
     'status' => true,
 ]);
 */
-?>

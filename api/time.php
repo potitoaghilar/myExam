@@ -1,20 +1,24 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8");
-$matricola=568254;
-$questions=30; //define questions number
-$timequestion=60; //secondi
-$maxtime=$questions*$timequestion;
 
-$connect = new mysqli('localhost:8889','root','root','esame');
+require_once 'requires.php';
 
-$getTime = $connect->query("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), start)) seconds from users where matricola=".$matricola);
+$matricola = $_GET['matricola'];
+$questions = 30; // Define questions number
+$timequestion = 60; // Seconds for each questions
+$maxtime = $questions * $timequestion;
 
-while($gettedtime = $getTime->fetch_array()){
-	
-	$time->time=$gettedtime['seconds'];
+// Get database instance
+$connect = Database::getInstance();
+
+$getTime = $connect->query("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), start)) seconds from users where matricola=" . $matricola);
+
+// Get elapsed time
+$elapsedTime = 0;
+while($getTime && $gettedtime = $getTime->fetch_array()){
+    $elapsedTime = $gettedtime['seconds'];
 }
-$time->time=$maxtime-$time->time;
-echo json_encode($time); //time in seconds
 
-
-?>
+// Time in seconds
+echo json_encode([
+    'time' => $maxtime - $elapsedTime
+]);

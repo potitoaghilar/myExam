@@ -20,16 +20,16 @@ $(document).ready(async function () {
             // Show the Loading spinner
             $('#loader').fadeIn();
 
-            // Instantiate session
-            const session = new Session();
-
             // Get login datas
             const nome = $('#nome').val();
             const cognome = $('#cognome').val();
             const matricola = $('#matricola').val();
 
+            // Instantiate session
+            const session = new Session(nome, cognome, matricola);
+
             // Check login
-            session.login(nome, cognome, matricola);
+            session.login();
 
         }, 1000);
 

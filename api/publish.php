@@ -1,10 +1,12 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8");
+
+require 'requires.php';
+
 //$matricola = $_GET['matricola'];
 //$risultato= $_GET['results'];
 //$nome =$_GET['nome'];
 //$cognome=$_GET['cognome'];
-$connessione = new mysqli('localhost:8889','root','root','esame');
+$connessione = Database::getInstance();
 $matricola= 568254;
 $id_answer=4;
 $id_question = 4;
