@@ -14,6 +14,10 @@ function generateRandomString($length = 10) {
 
 header("Content-Type: application/json; charset=UTF-8");
 
+$matricola=$_POST['matricola'];
+$nome=$_POST['nome'];
+$cognome=$_POST['cognome'];
+
 class response{
 	public $status;
 	public $message;
@@ -25,7 +29,7 @@ $message = new response();
 $connect = new mysqli('localhost:8889','root','root','esame');
 
 // Eseguo la query per prelevare le domande
-$insertuserdata = $connect->query("Insert into users (matricola,nome,cognome) values ('568254','Marco','Rizzi')");
+$insertuserdata = $connect->query("Insert into users (matricola,nome,cognome) values ('".$matricola."','".$nome."','".$cognome."')");
 if($insertuserdata){
 	$message->status="succes";
 	$message->message="Successo";
