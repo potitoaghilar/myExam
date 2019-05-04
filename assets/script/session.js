@@ -178,6 +178,13 @@ class Session {
         this.answers.push({questionId, answerId: parseInt(value)});
 
         //console.log(this.answers);
+		
+		//post
+		// API.postAnswer( parametri);
+		
+		//alert(matricola+questionId);
+		//alert(answerId: parseInt(value));
+		
     }
 
     // This method updates the UI showing the question on the screen
