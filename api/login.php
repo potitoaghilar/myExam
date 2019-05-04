@@ -29,7 +29,7 @@ $message = new response();
 $connect = new mysqli('localhost:8889','root','root','esame');
 
 // Eseguo la query per prelevare le domande
-$insertuserdata = $connect->query("Insert into users (matricola,nome,cognome) values ('".$matricola."','".$nome."','".$cognome."')");
+$insertuserdata = $connect->query("Insert into users (matricola,nome,cognome,start) values ('".$matricola."','".$nome."','".$cognome."',NOW())");
 if($insertuserdata){
 	$message->status="succes";
 	$message->message="Successo";
