@@ -17,13 +17,12 @@ function shuffle(a) {
     return a;
 }
 
-/**
- * Random int from 0 to 100
- * */
-randomInt = () => Math.floor(Math.random() * 101);
-
 function pad(n, width, z) {
     z = z || '0';
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

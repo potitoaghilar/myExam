@@ -4,10 +4,9 @@
 
 class Answer {
 
-    constructor(id, answer, isCorrect = false) {
+    constructor(id, answer) {
         this.id = id;
         this.answer = answer;
-        this.isCorrect = isCorrect;
     }
 
 }

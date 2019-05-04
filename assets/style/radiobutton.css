@@ -40,5 +40,3 @@
     transform: scale(0.74); }
   .radio:hover input:checked + span:after {
     transform: scale(0.4); }
-
-/*# sourceMappingURL=radiobutton.css.map */

@@ -1,13 +1,10 @@
 
 class Question {
 
-    constructor(question, answers) {
+    constructor(id, question, answers) {
+        this.id = id;
         this.question = question;
         this.answers = answers;
-    }
-
-    getCorrect() {
-        return this.answers.filter(x => x.isCorrect)[0];
     }
 
 }
