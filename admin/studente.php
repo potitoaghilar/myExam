@@ -1,8 +1,8 @@
 <?php
-/*ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-*/
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
+
 $matricola=568254;
 //get question list
 class Answer{
@@ -69,14 +69,32 @@ while($GivedAnswers=$GetAnswers->fetch_array()){
 	$GivedAnswers['id_answer'];
 	$GivedAnswers['id_question'];
 }
-print "<br>Risposte corrette".$corrette;
+
 
 //print json_encode($insertedAnswers);
 
+	echo "<table>";
+
+$corrette=0;
 //stampo scheda esame studente
 foreach($outputquestions as $quest){
+	echo "<tr><th>".$quest->text."</th></tr><tr><td><ol>";
 	
+	foreach($quest->answers as $answer){
+		echo "<li>".$answer->text;
+		if($answer->corrected==1){
+			print "(Risposta Corretta)";
+		}
+		if($answer->id==$insertedAnswers[$quest->id]){
+			print "(Risposta Selezionata)";
+			$corrette++;
+		}
+		print "</li>";
+	}
+	echo "</ol></td></tr>";
 }
+print "</table>";
 
-
+print "Risposte corrette".$corrette;
+//print json_encode($outputquestions);
 ?>
