@@ -51,7 +51,6 @@ while($gettedquestion = $getquestions->fetch_array()){
     $outputanswers = [];
     $question->text = $gettedquestion['text'];
     $question->id = $gettedquestion['id'];
-
     // Eseguo la query per prelevare le risposte
     $getanswers = $connect->query("Select * from answers where id_question=" . $gettedquestion['id']);
     while($gettedanswer = $getanswers->fetch_array()){
