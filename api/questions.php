@@ -22,7 +22,7 @@ $answer = new Answer;
 $outputquestions = [];
 
 // Creo la connessione con il db
-$connect = new mysqli('localhost:8889','root','root','esame');
+$connect = Database::getInstance();
 
 // Eseguo la query per prelevare le domande
 $getquestions = $connect->query("Select * from questions");

@@ -7,13 +7,18 @@ class Session {
     static get PREVIOUS_QUESTION() { return -1; }
     static get NEXT_QUESTION() { return 1; }
 
-    constructor() {
+    constructor(nome, cognome, matricola) {
 
         // Set the main fields of the object Session we are creating in this moment
         this.questions = [];
         this.currentQuestion = -1;
         this.answers = [];
         this.vote = 0;
+
+        // Set user profile
+        this.nome = nome;
+        this.cognome = cognome;
+        this.matricola = matricola;
 
         // Set timer
         this.setTimer();
@@ -22,11 +27,11 @@ class Session {
     async setTimer() {
         // The timer fields are useful for remaining time tracking
         this.timer = undefined;
-        this.time = await API.getTime();
+        this.time = await API.getTime(this.matricola);
     }
 
-    async login(nome, cognome, matricola) {
-        const response = await API.login(nome, cognome, matricola);
+    async login() {
+        const response = await API.login(this.nome, this.cognome, this.matricola);
         if (response.status) {
 
             // Fetch the questions from external API
