@@ -2,8 +2,14 @@
 //ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
 //error_reporting(E_ALL);
-
+require '../api/requires2.php';
+$connect = Database::getInstance();
+//debug only
 $matricola=568254;
+$nome="Marco";
+$cognome="rizzi";
+
+
 //get question list
 class Answer{
     public $id;
@@ -22,8 +28,6 @@ $question = new Question;
 $answer = new Answer;
 $outputquestions = [];
 
-// Creo la connessione con il db
-$connect = new mysqli('localhost:8889','root','root','esame');
 
 // Eseguo la query per prelevare le domande
 $getquestions = $connect->query("Select * from questions");
@@ -72,10 +76,15 @@ while($GivedAnswers=$GetAnswers->fetch_array()){
 
 
 //print json_encode($insertedAnswers);
+print "Matricola ".$matricola."<br>";
+print "Nome ".$nome."<br>";
+print "Cognome ".$cognome."<br>";
+print "Risposte Corrette ".$corrette." <br>";
+
+//va implementata la funzionalità dei punteggi bonus/malus
+
 
 	echo "<table>";
-
-$corrette=0;
 //stampo scheda esame studente
 foreach($outputquestions as $quest){
 	echo "<tr><th>".$quest->text."</th></tr><tr><td><ol>";
@@ -84,10 +93,10 @@ foreach($outputquestions as $quest){
 		echo "<li>".$answer->text;
 		if($answer->corrected==1){
 			print "(Risposta Corretta)";
+			
 		}
 		if($answer->id==$insertedAnswers[$quest->id]){
 			print "(Risposta Selezionata)";
-			$corrette++;
 		}
 		print "</li>";
 	}
@@ -95,6 +104,5 @@ foreach($outputquestions as $quest){
 }
 print "</table>";
 
-print "Risposte corrette".$corrette;
 //print json_encode($outputquestions);
 ?>
