@@ -26,7 +26,7 @@ $(document).ready(async function () {
             const matricola = $('#matricola').val();
 			$('#matricola_value').text(matricola);
 			$('#nameSurname_value').text(nome+" "+cognome);
-
+			
             // Instantiate session
             const session = new Session(nome, cognome, matricola);
 

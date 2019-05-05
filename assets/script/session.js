@@ -19,6 +19,7 @@ class Session {
         this.nome = nome;
         this.cognome = cognome;
         this.matricola = matricola;
+		
 
         // Set timer
         this.setTimer();
@@ -76,6 +77,7 @@ class Session {
         // Put correct and wrong answers together
         this.questions.push(new Question(questionData.id, questionData.text, answers));
     }
+	
 
     initSession() {
 
@@ -161,7 +163,8 @@ class Session {
             this.showResults();
         }, 400);
 		
-		//VA RICHIAMATO IL SUBMIT
+		//va richiamato il submit
+		
        
     }
 
@@ -215,7 +218,7 @@ class Session {
 
         // Generate close exam button
         if(this.currentQuestion == this.questions.length - 1) {
-            submitBtnHTML = '<button type="button" data-action="submit" class="btn btn-danger mt-3 ml-3 SubmitAnswers">Chiudi esame</button>';
+            submitBtnHTML = '<button type="button" data-action="submit" class="btn btn-danger mt-3 ml-3 submitAnswers">Chiudi esame</button>';
         }
 
         // Prints all the generated HTML to screen
@@ -245,18 +248,12 @@ class Session {
 
                         // Unbind the click action to avoid answer spamming! (IMPORTANT)
                         $(this).unbind();
-                    }
-                    break;
+                    } 
+					break;
             }
 
         });
 		
-		 $('.SubmitAnswers').click(function() {
-					that.closeSession;
-					
-
-
-        });
 		       
     }
 
