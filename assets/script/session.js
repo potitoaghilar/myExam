@@ -168,23 +168,18 @@ class Session {
     }
 
     // Save the answer provided from user
-    saveAnswer(value) {
+    saveAnswer(answerId) {
 
         const questionId = parseInt(this.questions[this.currentQuestion].id);
 
         // Remove old given answer for this question
         this.answers = this.answers.filter(x => x.questionId != questionId);
 
-        // Save result
-        this.answers.push({questionId, answerId: parseInt(value)});
+        // Save result in local
+        this.answers.push({questionId, answerId: parseInt(answerId)});
 
-        //console.log(this.answers);
-		
-		//post
-		// API.postAnswer( parametri);
-		
-		//alert(matricola+questionId);
-		//alert(answerId: parseInt(value));
+        // Send answer to server
+        API.postAnswer(this.matricola, questionId, answerId);
 		
     }
 

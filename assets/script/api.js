@@ -8,7 +8,7 @@ class API {
             TIME: API.baseEndpoint + '/api/time.php?matricola=',
             QUESTIONS: API.baseEndpoint + '/api/questions.php',
             SUBMIT: API.baseEndpoint + '/api/submit.php',
-			ANSWER: API.baseEndpoint + '/api/submit.php',
+            ANSWER: API.baseEndpoint + '/api/publish.php',
         };
     }
 
@@ -44,12 +44,12 @@ class API {
             url: this.ENDPOINTS.SUBMIT,
         });
     }
-	//invio risposta
-	static async postAnswer(matricola,answer_id,question_id) {
+
+	static async postAnswer(matricola, question_id, answer_id) {
         return await $.ajax({
             type: 'POST',
             url: this.ENDPOINTS.ANSWER,
-            data: {matricola, answer_id, question_id},
+            data: {matricola, question_id, answer_id},
         });
     }
 
