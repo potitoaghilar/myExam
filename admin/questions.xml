@@ -2,13 +2,52 @@
 <questions>
 
 <quest>
-    <text>Testo Domanda</text>
+    <text>Testo Domanda 1</text>
 	<correctAnswer>Risposta 1</correctAnswer>
-	<answer>Risppsta2</answer>
-	<answer>Risppsta3</answer>
-	<answer>Risppsta4</answer>
-	
+	<answer>Risposta2</answer>
+	<answer>Risposta3</answer>
+	<answer>Risposta4</answer>
 </quest>
-
-
+<quest>
+    <text>Testo Domanda 2</text>
+	<correctAnswer>Risposta 1</correctAnswer>
+	<answer>Risposta2</answer>
+	<answer>Risposta3</answer>
+	<answer>Risposta4</answer>
+</quest>
+	<quest>
+    <text>Testo Domanda 3</text>
+	<correctAnswer>Risposta 1</correctAnswer>
+	<answer>Risposta2</answer>
+	<answer>Risposta3</answer>
+	<answer>Risposta4</answer>
+</quest>
+	<quest>
+    <text>Testo Domanda 4</text>
+	<correctAnswer>Risposta 1</correctAnswer>
+	<answer>Risposta2</answer>
+	<answer>Risposta3</answer>
+	<answer>Risposta4</answer>
+</quest>
+	<quest>
+    <text>Testo Domanda 5</text>
+	<correctAnswer>Risposta 1</correctAnswer>
+	<answer>Risposta2</answer>
+	<answer>Risposta3</answer>
+	<answer>Risposta4</answer>
+</quest>
+	<quest>
+    <text>Testo Domanda 6</text>
+	<correctAnswer>Risposta 1</correctAnswer>
+	<answer>Risposta2</answer>
+	<answer>Risposta3</answer>
+	<answer>Risposta4</answer>
+</quest>
+	<quest>
+    <text>Testo Domanda 7</text>
+	<correctAnswer>Risposta 1</correctAnswer>
+	<answer>Risposta2</answer>
+	<answer>Risposta3</answer>
+	<answer>Risposta4</answer>
+</quest>
 </questions>
