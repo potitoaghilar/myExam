@@ -6592,6 +6592,14 @@ a.nav-link:hover {
   .time .value {
     font-size: xx-large; }
 
+/* User Details */
+#user_details {
+  display: none;
+  margin-left: 20px;
+  margin-top: 15px;
+  font-size: xx-large;
+}
+
 .info {
   font-size: x-large; }
 

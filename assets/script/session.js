@@ -98,6 +98,7 @@ class Session {
 
             // Show timer
             $('#time').fadeIn();
+			$('#user_details').fadeIn();
 
             // Set timer that update the remaining time
             this.timer = this.setTimerTick();
