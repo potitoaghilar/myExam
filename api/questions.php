@@ -32,7 +32,10 @@ while($gettedquestion = $getquestions->fetch_array()){
     $question->id = $gettedquestion['id'];
 
     // Eseguo la query per prelevare le risposte
-    $getanswers = $connect->query("Select * from answers where id_question=" . $gettedquestion['id']);
+  //  $getanswers = $connect->query("Select * from answers where id_question=" . $gettedquestion['id'])." order by rand()";
+	
+	$getanswers = $connect->query("Select * from answers where id_question=" . $gettedquestion['id']);
+	
     while($gettedanswer = $getanswers->fetch_array()){
         $answer->id = $gettedanswer['id'];
         $answer->text = $gettedanswer['text'];
