@@ -38,12 +38,22 @@ class API {
             url: this.ENDPOINTS.QUESTIONS,
         });
     }
-
+/*
     static async submit(answers) {
         return await $.ajax({
             url: this.ENDPOINTS.SUBMIT,
         });
     }
+	*/
+	
+	static async submit(matricola) {
+        return await $.ajax({
+            type: 'POST',
+            url: this.ENDPOINTS.SUBMIT,
+            data: {matricola},
+        });
+    }
+	
 
 	static async postAnswer(matricola, question_id, answer_id) {
         return await $.ajax({

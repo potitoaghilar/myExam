@@ -154,11 +154,15 @@ class Session {
 
         // Hide session page
         $('#session').fadeOut();
+		
 
         // Show results page
         setTimeout(() => {
             this.showResults();
         }, 400);
+		
+		//VA RICHIAMATO IL SUBMIT
+       
     }
 
     // Update time UI: minutes and seconds
@@ -211,7 +215,7 @@ class Session {
 
         // Generate close exam button
         if(this.currentQuestion == this.questions.length - 1) {
-            submitBtnHTML = '<button type="button" data-action="next" class="btn btn-danger mt-3 ml-3">Chiudi esame</button>';
+            submitBtnHTML = '<button type="button" data-action="submit" class="btn btn-danger mt-3 ml-3 SubmitAnswers">Chiudi esame</button>';
         }
 
         // Prints all the generated HTML to screen
@@ -246,6 +250,14 @@ class Session {
             }
 
         });
+		
+		 $('.SubmitAnswers').click(function() {
+					that.closeSession;
+					
+
+
+        });
+		       
     }
 
     //// Get the selected answer that the user selected
@@ -290,5 +302,6 @@ class Session {
         }, 1500);
 
     }
+
 
 }

@@ -7,9 +7,8 @@ require 'requires.php';
 //$nome =$_GET['nome'];
 //$cognome=$_GET['cognome'];
 $connessione = Database::getInstance();
-//$matricola=$_POST['matricola'];
+$matricola=$_POST['matricola'];
 
-$matricola= 568254;
 //$id_answer=4;
 //$id_question = 4;
 
