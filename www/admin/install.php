@@ -1,20 +1,10 @@
 <?php
 
-require '../api/requires.php';
+require 'requires.php';
 
-if(!file_exists('questions.xml')) {
+if(!file_exists('../setup/questions.xml')) {
     print "Installazione già eseguita.";
     return;
-}
-
-class Question {
-    public $text;
-    public $answers;
-}
-
-class Answer {
-    public $text;
-    public $correct;
 }
 
 $question = new Question();
@@ -22,7 +12,7 @@ $questions = [];
 $answer = new Answer();
 $answers = [];
 
-$xml = simplexml_load_file("questions.xml") or die("Errore");
+$xml = simplexml_load_file("../setup/questions.xml") or die("Errore");
 
 $data = json_encode($xml);
 $data = json_decode($data,true);
@@ -60,7 +50,7 @@ foreach($data['question'] as $questItem){
 
 print "Installazione eseguita con successo.\n";
 
-if($_GET['keep-source']) {
-    unlink("questions.xml");
+if(!isset($_GET['keep-source'])) {
+    unlink("../setup/questions.xml");
     print "File delle domande eliminato";
 }

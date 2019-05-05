@@ -1,8 +1,7 @@
 <?php
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
-require '../api/requires2.php';
+
+require 'requires.php';
+
 $connect = Database::getInstance();
 //debug only
 $matricola=568254;

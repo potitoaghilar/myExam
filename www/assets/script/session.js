@@ -33,14 +33,17 @@ class Session {
 
     async login() {
         const response = await API.login(this.nome, this.cognome, this.matricola);
-        if (response.status) {
+        if (response.status == 'success') {
+
+            // Save already given answers
+            this.answers = response.message;
 
             // Fetch the questions from external API
             this.fetchQuestions();
 
         } else {
 
-            $('#error').modal('show').find('.modal-body').text(response.error);
+            $('#error').modal('show').find('.modal-body').text(response.message);
             $('.loader').fadeOut();
             $('#login-form').delay(600).fadeIn();
             $('#exam-title').delay(600).fadeIn();
@@ -56,7 +59,7 @@ class Session {
         const questions = await API.getQuestions();
 
         // Create the questions from API response
-        questions.forEach((question, index) => this.createQuestion(question));
+        questions.forEach(question => this.createQuestion(question));
 
         // Load question number in UI
         $('.questions .questions-total').text(this.questions.length);
@@ -74,6 +77,9 @@ class Session {
         // Create answers
         questionData.answers.forEach((answer) => answers.push(new Answer(answer.id, answer.text)));
 
+        // Mix answers order
+        answers = shuffle(answers);
+
         // Put correct and wrong answers together
         this.questions.push(new Question(questionData.id, questionData.text, answers));
     }
@@ -90,7 +96,7 @@ class Session {
         setTimeout(() => {
 
             // Let's mix questions
-            this.questions = shuffle(this.questions);
+            //this.questions = shuffle(this.questions);
 
             // Show question count
             Session.showQuestionsCounter();
@@ -156,15 +162,14 @@ class Session {
 
         // Hide session page
         $('#session').fadeOut();
-		
+
+        // Close exam request
+        API.submit(this.matricola);
 
         // Show results page
         setTimeout(() => {
             this.showResults();
         }, 400);
-		
-		//va richiamato il submit
-		
        
     }
 
