@@ -1,4 +1,7 @@
 
+assets/.DS_Store
+.DS_Store
+
 # Created by https://www.gitignore.io/api/webstorm+all
 # Edit at https://www.gitignore.io/?templates=webstorm+all
 
@@ -90,5 +93,3 @@ modules.xml
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/webstorm+all
-assets/.DS_Store
-.DS_Store
