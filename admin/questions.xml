@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questions>
+
+<quest>
+    <text>Testo Domanda</text>
+	<correctAnswer>Risposta 1</correctAnswer>
+	<answer>Risppsta2</answer>
+	<answer>Risppsta3</answer>
+	<answer>Risppsta4</answer>
+	
+</quest>
+
+
+</questions>
