@@ -8245,7 +8245,9 @@ html body {
 #user_details {
   display: none;
   margin-left: 20px;
-  margin-top: 15px;
+  margin-top: -25px;
+}
+#user_details #matricola_value {
   font-size: xx-large;
 }
 
