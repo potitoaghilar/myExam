@@ -31,7 +31,8 @@ if($insertuserdata){
 else{
 	$message->status = "error";
 	//$message->message = "Con questa matricola, hai gi&agrave; eseguito il test";
-	$getAnswers = $connect->query("Select id_question, id_answer from users_answers where matricola_user=".$matricola );
+	//$getAnswers = $connect->query("Select id_question, id_answer from users_answers where matricola_user=".$matricola." and end is NULL" );
+	$getAnswers = $connect->query("Select id_question, id_answer from users_answers where matricola_user=".$matricola);
 	while($answer = $getAnswers->fetch_array()){
 	$Data->id_question=$answer['id_question'];
 	$Data->id_answer=$answer['id_answer'];
