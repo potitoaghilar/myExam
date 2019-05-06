@@ -56,11 +56,10 @@ CREATE TABLE `questions` (
 
 CREATE TABLE `users` (
   `matricola` char(6) NOT NULL,
-  `cognome` varchar(100) DEFAULT NULL,
-  `nome` varchar(100) DEFAULT NULL,
-  `punteggio` int(2) DEFAULT NULL,
-  `bonus` int(2) DEFAULT NULL,
-  `malus` int(2) DEFAULT NULL,
+  `cognome` varchar(100) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `bonus` int(2) DEFAULT 0,
+  `malus` int(2) DEFAULT 0,
   `start` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `end` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
