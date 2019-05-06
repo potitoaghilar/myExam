@@ -22,7 +22,7 @@ if(mysqli_num_rows($query) == 0) {
 } else {
 
     // Save given answer
-    $query = $connect->query("INSERT INTO users_answers (matricola_user, id_answer, id_question) VALUES('".$matricola."','".$id_answer."','".$id_question."') ON DUPLICATE KEY UPDATE id_answer='".$id_question."';");
+    $query = $connect->query("INSERT INTO users_answers (matricola_user, id_answer, id_question) VALUES('".$matricola."','".$id_answer."','".$id_question."') ON DUPLICATE KEY UPDATE id_answer='$id_answer';");
 
     // Send result to client
     $response = new Response();
