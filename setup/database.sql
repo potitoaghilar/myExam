@@ -60,7 +60,7 @@ CREATE TABLE `users` (
   `nome` varchar(100) NOT NULL,
   `bonus` int(2) DEFAULT 0,
   `malus` int(2) DEFAULT 0,
-  `start` timestamp NUL DEFAULT CURRENT_TIMESTAMP,
+  `start` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `end` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

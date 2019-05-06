@@ -15,19 +15,19 @@ $query =$connessione->query("Select count(matricola_user) as numerorispostedate,
 //fetch result as an associative array
 $summary = $query->fetch_array();
 
-if($summary['numerorispostedate']==$questions){
+if($summary['numerorispostedate'] == $questions){
 	$response->status ="success";
+
 	// Set end time for given user 'matricola'
 	$querysubmit = $connessione->query("UPDATE users set end=NOW() where matricola=$matricola");
 	
-	if($summary['numerocorrette']>=18){
+	if($summary['numerocorrette'] >= 18) {
 		$response->message ="Idoneo".$summary['numerocorrette'];
 	}
-	if($summary['numerocorrette']<18){
+	if($summary['numerocorrette'] < 18) {
 		$response->message ="Non Idoneo";
 	}
-}
-else{
+} else {
 	$response->status="error";
 	$response->message=$questions-$summary['numerorispostedate'];
 }

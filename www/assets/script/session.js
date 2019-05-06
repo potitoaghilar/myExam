@@ -126,6 +126,11 @@ class Session {
 
             // Close the session if the time is out
             if(this.time <= 0) {
+
+                // Reset timer to 0
+                this.time = 0;
+                this.updateTimerUI();
+
                 this.closeSession();
             }
 
@@ -151,26 +156,22 @@ class Session {
     }
 
     // Close the session and show the results
-    closeSession() {
+    async closeSession() {
 
         // Remove the timer
         clearInterval(this.timer);
-
-        // Set time to 0
-        this.time = 0;
-        this.updateTimerUI();
 
         // Hide session page
         $('#session').fadeOut();
 
         // Close exam request
-        API.submit(this.matricola);
+        const result = await API.submit(this.matricola);
 
         // Show results page
         setTimeout(() => {
-            this.showResults();
+            this.showResults(result.message);
         }, 400);
-       
+
     }
 
     // Update time UI: minutes and seconds
@@ -223,7 +224,7 @@ class Session {
 
         // Generate close exam button
         if(this.currentQuestion == this.questions.length - 1) {
-            submitBtnHTML = '<button type="button" data-action="submit" class="btn btn-danger mt-3 ml-3 submitAnswers">Chiudi esame</button>';
+            submitBtnHTML = '<button id="closeSession" type="button" data-action="submit" class="btn btn-danger mt-3 ml-3">Chiudi esame</button>';
         }
 
         // Prints all the generated HTML to screen
@@ -259,14 +260,10 @@ class Session {
 
         });
 		
-		       
-    }
+        // Add click listener to close exam
+        $('#closeSession').click(() => this.closeSession());
 
-    //// Get the selected answer that the user selected
-    //             const selectedAnswer = $(".answer input:checked").first();
-    //
-    //             // Save user answer
-    //             let isCorrect = that.saveAnswer();
+    }
 
     // Show current and total question to screen
     static showQuestionsCounter() {
@@ -274,27 +271,13 @@ class Session {
     }
 
     // Show results page on UI
-    showResults() {
-
-        // Count correct answers
-        const risposteCorrette = this.answers.filter(x => x === true).length;
+    showResults(apiResult) {
 
         // Generate HTML for correct answers text
-        const result = '<div class="summaryLabel">Risposte corrette</div><div class="summary">' + risposteCorrette + '<span>/' + Session.questionAmount + '</span></div>';
-
-        // Generate HTML for comment text based on vote
-        let comment = '';
-        if(this.vote == 30) {
-            comment = 'Hai passato la prova. Congratulazioni!';
-        } else if (this.vote >= 18 && this.vote < 30) {
-            comment = 'Hai superato la prova';
-        } else {
-            comment = 'NON hai superato la prova';
-        }
-        comment = '<div class="mt-3 mb-5 comment">' + comment + '</div>';
+        const result = '<div class="summaryLabel">Esame concluso</div><div class="summary">' + apiResult + '</span></div>';
 
         // Show HTML on UI
-        $('#session').html(result + comment).fadeIn();
+        $('#session').html(result).fadeIn();
 
         // Show Home button after a delay of 1.5 seconds
         setTimeout(() => {
