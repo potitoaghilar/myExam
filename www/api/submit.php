@@ -22,11 +22,12 @@ if($summary['numerorispostedate'] == $questions){
 	$querysubmit = $connessione->query("UPDATE users set end=NOW() where matricola=$matricola");
 	
 	if($summary['numerocorrette'] >= 18) {
-		$response->message ="Idoneo".$summary['numerocorrette'];
+		$response->message = "Idoneo";
 	}
 	if($summary['numerocorrette'] < 18) {
-		$response->message ="Non Idoneo";
+		$response->message = "Non Idoneo";
 	}
+
 } else {
 	$response->status="error";
 	$response->message=$questions-$summary['numerorispostedate'];
