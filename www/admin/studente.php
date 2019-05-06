@@ -1,107 +1,145 @@
 <?php
 
 require 'requires.php';
+require 'head.php';
 
 $connect = Database::getInstance();
-//debug only
+
 $matricola=$_GET['matricola'];
 
 $getUserDetails = $connect->query("Select * from users where matricola=".$matricola);
 $user=$getUserDetails->fetch_assoc();
 
-//get question list
-class Answer{
-    public $id;
-    public $text;
-	public $corrected;
-}
-
-class Question{
-    public $id;
-    public $text;
-    public $answers = [];
-}
-
 // Inizializzo variabili
-$question = new Question;
-$answer = new Answer;
 $outputquestions = [];
-
 
 // Eseguo la query per prelevare le domande
 $getquestions = $connect->query("Select * from questions");
 
-$correctanswers = [];
+// Ottengo elenco domande con relative risposte
+while($gettedquestion = $getquestions->fetch_array()) {
 
-//ottengo elenco domande con relative risposte
-while($gettedquestion = $getquestions->fetch_array()){
-
-    $outputanswers = [];
+    $question = new Question();
     $question->text = $gettedquestion['text'];
     $question->id = $gettedquestion['id'];
+
     // Eseguo la query per prelevare le risposte
+    $outputanswers = [];
     $getanswers = $connect->query("Select * from answers where id_question=" . $gettedquestion['id']);
-    while($gettedanswer = $getanswers->fetch_array()){
+    while($gettedanswer = $getanswers->fetch_array()) {
+
+        $answer = new Answer();
         $answer->id = $gettedanswer['id'];
         $answer->text = $gettedanswer['text'];
-		$answer->corrected = $gettedanswer['correct'];
-		if($answer->corrected==1){
-		$correctanswers[$question->id] =$gettedanswer['id'];
-		}
+        $answer->corrected = $gettedanswer['correct'];
+        
         array_push($outputanswers, $answer);
-        unset($answer);
+
     }
 
     // Inserisco l'elenco delle risposte nell'oggetto delle domande
     $question->answers = $outputanswers;
-	$outputquestions[$question->id]=$question;
-    unset($question);
+    $outputquestions[$question->id]=$question;
+    
 }
-//print json_encode($outputquestions);
-//print json_encode($correctanswers);
-//prelevo risposte studente
 
-$GetAnswers = $connect->query("Select * from users_answers where matricola_user=" . $matricola) or die ("errore");
+// Prelevo risposte studente
+$getAnswers = $connect->query("Select * from users_answers where matricola_user=" . $matricola) or die ("errore");
 $corrette = 0;
 $insertedAnswers = [];
-while($GivedAnswers=$GetAnswers->fetch_array()){
-	$insertedAnswers[$GivedAnswers['id_question']]=$GivedAnswers['id_answer'];
-	if($GivedAnswers['id_answer']==$correctanswers[$GivedAnswers['id_question']]){
+while($givedAnswers = $getAnswers->fetch_array()){
+	$insertedAnswers[$givedAnswers['id_question']] = $givedAnswers['id_answer'];
+	if($givedAnswers['id_answer'] == $outputquestions[$givedAnswers['id_question']]->getCorrectAnswer()->id){
 		$corrette++;
-	}
-	$GivedAnswers['id_answer'];
-	$GivedAnswers['id_question'];
+    }
 }
 
-
-//print json_encode($insertedAnswers);
-print "Matricola ".$user['matricola']."<br>";
-print "Nome ".$user['nome']."<br>";
-print "Cognome ".$user['cognome']."<br>";
-print "Risposte Corrette ".$corrette." <br>";
-
-//va implementata la funzionalità dei punteggi bonus/malus
-
-
-	echo "<table>";
-//stampo scheda esame studente
-foreach($outputquestions as $quest){
-	echo "<tr><th>".$quest->text."</th></tr><tr><td><ol>";
-	
-	foreach($quest->answers as $answer){
-		echo "<li>".$answer->text;
-		if($answer->corrected==1){
-			print "(Risposta Corretta)";
-			
-		}
-		if($answer->id==$insertedAnswers[$quest->id]){
-			print "(Risposta Selezionata)";
-		}
-		print "</li>";
-	}
-	echo "</ol></td></tr>";
-}
-print "</table>";
-
-//print json_encode($outputquestions);
 ?>
+
+<body>
+
+    <section class="container my-4">
+        <div class="col-3 mx-auto">
+            <img class="main-logo" src="../assets/img/logo.png">
+        </div>
+    </section>
+
+    <div class="mb-4 text-center">
+        <h3><?= $examTitle ?></h3>
+        <div class="user-data">
+
+            <span>Nome: <b><?= $user['nome'] ?></b></span>
+            <span>Cognome: <b><?= $user['cognome'] ?></b></span>
+            <span>Matricola: <b><?= $user['matricola'] ?></b></span>
+            <span>Risposte corrette: <b><?= $corrette ?></b></span>
+			<span>Bonus: <input id="bonus" type="number" value="<?= $user['bonus'] ?>"></span>
+			<span>Malus: <input id="malus" type="number" value="<?= $user['malus'] ?>"></span>
+			<span id="finalVale">Voto Finale: <b><? $corrette+$user['bonus']+$user['malus'] ?></b></span>
+        </div>
+    </div>
+
+    <section class="container">
+
+        <table>
+
+            <?php
+
+            // Stampo scheda esame studente
+            foreach ($outputquestions as $quest): ?>
+
+                <tr><th><?= $quest->text ?></th></tr>
+                <tr>
+                    <td>
+                        <ol>
+                            <?php foreach ($quest->answers as $answer): ?>
+                                <li>
+                                    <?= $answer->text ?>
+                                    <?= $answer->corrected == 1 ? ' (Risposta Corretta)' : '' ?>
+                                    <?= $answer->id == $insertedAnswers[$quest->id] ? ' (Risposta Selezionata)' : '' ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ol>
+                    </td>
+                </tr>
+
+            <?php endforeach; ?>
+
+        </table>
+
+    </section>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+
+    $("#bonus").change(function(){
+        var amount = $('#bonus').val();
+        var type = 'bonus';
+        var matricola = '<?= $user['matricola'] ?>';
+        $.ajax({
+            type: 'POST',
+            url: 'updatePoints.php',
+            data: {amount, type, matricola},
+            success: function(response) {
+                alert(response.message);
+            }
+        });
+		votofinale = <?= $corrette ?> + amount
+		$('#finalValue').html="votofinale";
+	});
+	
+	$("#malus").change(function(){
+        var amount = $('#malus').val();
+        var type = 'malus';
+        var matricola ='<?= $user['matricola'] ?>';
+        $.ajax({
+            type: 'POST',
+            url: 'updatePoints.php',
+            data: {amount, type, matricola},
+            success: function(response) {
+                alert(response.message);
+            }
+        });
+    });
+
+    </script>
+
+</body>

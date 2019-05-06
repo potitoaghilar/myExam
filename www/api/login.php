@@ -59,7 +59,7 @@ if(!$user) {
         $givenAnswers = [];
         $getAnswers = $connect->query("Select id_question, id_answer from users_answers where matricola_user=".$matricola);
         while($answer = $getAnswers->fetch_array()){
-            $data = new Answer();
+            $data = new UserAnswer();
             $data->questionId = intval($answer['id_question']);
             $data->answerId = intval($answer['id_answer']);
             array_push($givenAnswers, $data);
