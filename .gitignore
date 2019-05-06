@@ -1,7 +1,6 @@
 
-assets/.DS_Store
-.DS_Store
-www/assets/style/bootstrap/.sass-cache/
+**/.DS_Store
+**/.sass-cache/
 
 # Created by https://www.gitignore.io/api/webstorm+all
 # Edit at https://www.gitignore.io/?templates=webstorm+all
