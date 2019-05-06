@@ -9,6 +9,17 @@ $(document).ready(async function () {
 
     function newSession() {
 
+        // Get login datas
+        const nome = $('#nome').val();
+        const cognome = $('#cognome').val();
+        const matricola = $('#matricola').val();
+
+        // Check if all fields are filled
+        if(nome === '' || cognome === '' || matricola === '') {
+            $('#error').modal('show').find('.modal-body').text('Inserisci i dati richiesti per iniziare l\'esame');
+            return;
+        }
+
         // Prepare environment with some visual effects
         $('.logo').removeClass('col-9').addClass('col-6');
         $('.exam-title').fadeOut();
@@ -20,12 +31,9 @@ $(document).ready(async function () {
             // Show the Loading spinner
             $('#loader').fadeIn();
 
-            // Get login datas
-            const nome = $('#nome').val();
-            const cognome = $('#cognome').val();
-            const matricola = $('#matricola').val();
+            // Show user profile on top left
 			$('#matricola_value').text(matricola);
-			$('#nameSurname_value').text(nome+" "+cognome);
+			$('#nameSurname_value').text(nome + " " + cognome);
 			
             // Instantiate session
             const session = new Session(nome, cognome, matricola);
