@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 05, 2019 at 03:13 PM
+-- Generation Time: May 05, 2019 at 07:35 PM
 -- Server version: 8.0.13
 -- PHP Version: 7.2.13
 
@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `esame`
 --
-CREATE DATABASE IF NOT EXISTS `esame` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS `esame` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `esame`;
 
 -- --------------------------------------------------------
@@ -116,13 +116,13 @@ ALTER TABLE `users_answers`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

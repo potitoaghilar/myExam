@@ -1,16 +1,10 @@
 <?php
-
 require 'requires.php';
 
 if(!file_exists('../../setup/questions.xml')) {
     print "Installazione già eseguita.";
     return;
 }
-
-$question = new Question();
-$questions = [];
-$answer = new Answer();
-$answers = [];
 
 $xml = simplexml_load_file("../../setup/questions.xml") or die("Errore");
 

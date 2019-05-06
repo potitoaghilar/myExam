@@ -4,10 +4,10 @@ require 'requires.php';
 
 $connect = Database::getInstance();
 //debug only
-$matricola=568254;
-$nome="Marco";
-$cognome="rizzi";
+$matricola=$_GET['matricola'];
 
+$getUserDetails = $connect->query("Select * from users where matricola=".$matricola);
+$user=$getUserDetails->fetch_assoc();
 
 //get question list
 class Answer{
@@ -75,9 +75,9 @@ while($GivedAnswers=$GetAnswers->fetch_array()){
 
 
 //print json_encode($insertedAnswers);
-print "Matricola ".$matricola."<br>";
-print "Nome ".$nome."<br>";
-print "Cognome ".$cognome."<br>";
+print "Matricola ".$user['matricola']."<br>";
+print "Nome ".$user['nome']."<br>";
+print "Cognome ".$user['cognome']."<br>";
 print "Risposte Corrette ".$corrette." <br>";
 
 //va implementata la funzionalità dei punteggi bonus/malus
