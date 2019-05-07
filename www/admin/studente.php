@@ -72,9 +72,9 @@ while($givedAnswers = $getAnswers->fetch_array()){
             <span>Cognome: <b><?= $user['cognome'] ?></b></span>
             <span>Matricola: <b><?= $user['matricola'] ?></b></span>
             <span>Risposte corrette: <b><?= $corrette ?></b></span>
-			<span>Bonus: <input id="bonus" type="number" value="<?= $user['bonus'] ?>"></span>
-			<span>Malus: <input id="malus" type="number" value="<?= $user['malus'] ?>"></span>
-			<span id="finalVale">Voto Finale: <b><? $corrette+$user['bonus']+$user['malus'] ?></b></span>
+			<span>Bonus: <input id="bonus" class="points" data-action="changeBonus" type="number" value="<?= $user['bonus'] ?>" style="width:46px"></span>
+			<span>Malus: <input id="malus" class="points"  data-action="changeMalus" type="number" value="<?= $user['malus'] ?>" style="width:46px"></span>
+			<span id="finalVale">Voto Finale: <b id="labelPoints"><?=$corrette+$user['bonus']+$user['malus'] ?></b></span>
         </div>
     </div>
 
@@ -109,11 +109,43 @@ while($givedAnswers = $getAnswers->fetch_array()){
     </section>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
+		$('.points').change(function() {
+			
+			var bonus=$('#bonus').val();
+			var malus = $('#malus').val();
+            var matricola = '<?= $user['matricola'] ?>';
+			
+            switch ($(this).attr('data-action')) {
+                case 'changeBonus':
+					var type = 'bonus';
+					var amount = bonus;
+                    
+                    break;
+                case 'changeMalus':
+					var type = 'malus';
+					var amount = malus;
+                   
+					break;
+            }
+			$.ajax({
+            type: 'POST',
+            url: 'updatePoints.php',
+            data: {amount, type, matricola},
+            success: function(response) {
+                alert(response.message);
+            }
+        });
+			votofinale = parseInt(<?= $corrette ?>) + parseInt(bonus) - parseInt(malus);
+		$('#labelPoints').html(votofinale);
+			
 
+        });
+/*
     $("#bonus").change(function(){
         var amount = $('#bonus').val();
         var type = 'bonus';
         var matricola = '<?= $user['matricola'] ?>';
+		var malus = $('#malus').val();
         $.ajax({
             type: 'POST',
             url: 'updatePoints.php',
@@ -122,14 +154,15 @@ while($givedAnswers = $getAnswers->fetch_array()){
                 alert(response.message);
             }
         });
-		votofinale = <?= $corrette ?> + amount
-		$('#finalValue').html="votofinale";
+		votofinale = parseInt(<?= $corrette ?>) + parseInt(amount) - parseInt(malus);
+		$('#labelPoints').html(votofinale);
 	});
 	
 	$("#malus").change(function(){
         var amount = $('#malus').val();
         var type = 'malus';
         var matricola ='<?= $user['matricola'] ?>';
+		var bonus = $('#bonus').val();
         $.ajax({
             type: 'POST',
             url: 'updatePoints.php',
@@ -138,7 +171,10 @@ while($givedAnswers = $getAnswers->fetch_array()){
                 alert(response.message);
             }
         });
+		votofinale = parseInt(<?= $corrette ?>) - parseInt(amount) + parseInt(bonus);
+		$('#labelPoints').html(votofinale);
     });
+	*/
 
     </script>
 

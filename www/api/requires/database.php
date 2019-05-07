@@ -4,9 +4,9 @@ class Database {
 
     const config = [
         'host' => 'localhost',
-        'port' => '3306',
+        'port' => '8889',
         'username' => 'root',
-        'password' => 'Poti1997$',
+        'password' => 'root',
         'database' => 'esame',
     ];
 
