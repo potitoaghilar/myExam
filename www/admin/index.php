@@ -64,8 +64,8 @@ $connect = Database::getInstance();
             <td>".$risultato['nome']."</td>
             <td>".$risultato['cognome']."</td>
             <td id='questions".$risultato['matricola']."'>".$points."</td>
-            <td><input style='width:40px' type='number' class='points' data-action='changeBonus' matricola='".$risultato['matricola']."' value='".$risultato['bonus']."'></td>
-            <td><input style='width:40px' type='number' matricola='".$risultato['matricola']."' class='points' data-action='changeMalus' value='".$risultato['malus']."'></td>
+            <td><input style='width:40px' type='number' class='points' data-action='changeBonus' matricola='".$risultato['matricola']."' value='".$risultato['bonus']."' id='bonus".$risultato['matricola']."'></td>
+            <td><input style='width:40px' type='number' matricola='".$risultato['matricola']."' class='points' data-action='changeMalus' value='".$risultato['malus']."'  id='malus".$risultato['matricola']."'></td>
             <td id='labelPoints".$risultato['matricola']."'>".$votofinale."</td></tr>";
 
         }
@@ -81,15 +81,19 @@ $connect = Database::getInstance();
 			var name='#labelPoints'+matricola;
 			var name2='#questions'+matricola;
 			var points =parseInt($(name2).text());
+			var nome3='#bonus'+matricola;
+			var nome4='#malus'+matricola;
+			var bonus =parseInt($(nome3).val());
+			var malus =parseInt($(nome4).val());
 			
 			switch ($(this).attr('data-action')) {
                 case 'changeBonus':
 					var type = 'bonus'; 
-					points = points + amount; //sottrarre malus
+					points = points + amount-malus; //sottrarre malus
                     break;
                 case 'changeMalus':
 					var type = 'malus';   
-					points = points - amount; //aggiungere bonus
+					points = points - amount+bonus; //aggiungere bonus
 					break;
             }
 			$.ajax({
