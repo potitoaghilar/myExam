@@ -63,15 +63,46 @@ $connect = Database::getInstance();
             <td><a href='/admin/studente.php?matricola=".$risultato['matricola']."'>".$risultato['matricola']."</a></td>
             <td>".$risultato['nome']."</td>
             <td>".$risultato['cognome']."</td>
-            <td>".$points."</td>
-            <td>".$risultato['bonus']."</td>
-            <td>".$risultato['malus']."</td>
-            <td>".$votofinale."</td></tr>";
+            <td id='questions".$risultato['matricola']."'>".$points."</td>
+            <td><input style='width:40px' type='number' class='points' data-action='changeBonus' matricola='".$risultato['matricola']."' value='".$risultato['bonus']."'></td>
+            <td><input style='width:40px' type='number' matricola='".$risultato['matricola']."' class='points' data-action='changeMalus' value='".$risultato['malus']."'></td>
+            <td id='labelPoints".$risultato['matricola']."'>".$votofinale."</td></tr>";
 
         }
         ?>
 
     </table>
 </body>
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+		$('.points').change(function() {
+			var matricola=$(this).attr('matricola');
+			var amount =parseInt($(this).val());
+			var name='#labelPoints'+matricola;
+			var name2='#questions'+matricola;
+			var points =parseInt($(name2).text());
+			
+			switch ($(this).attr('data-action')) {
+                case 'changeBonus':
+					var type = 'bonus'; 
+					points = points + amount; //sottrarre malus
+                    break;
+                case 'changeMalus':
+					var type = 'malus';   
+					points = points - amount; //aggiungere bonus
+					break;
+            }
+			$.ajax({
+            type: 'POST',
+            url: 'updatePoints.php',
+            data: {amount, type, matricola},
+            success: function(response) {
+                alert(response.message);
+				$(name).html(points);
+            }
+        });
+		});
+			
+			
+</script>
 <?php $connect->close(); ?>

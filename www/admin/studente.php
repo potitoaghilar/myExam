@@ -133,12 +133,12 @@ while($givedAnswers = $getAnswers->fetch_array()){
             data: {amount, type, matricola},
             success: function(response) {
                 alert(response.message);
+				votofinale = parseInt(<?= $corrette ?>) + parseInt(bonus) - parseInt(malus);
+		$('#labelPoints').html(votofinale);
             }
         });
-			votofinale = parseInt(<?= $corrette ?>) + parseInt(bonus) - parseInt(malus);
-		$('#labelPoints').html(votofinale);
 			
-
+			
         });
 /*
     $("#bonus").change(function(){
