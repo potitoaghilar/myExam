@@ -158,9 +158,9 @@ class Session {
 
     // Close the session and show the results
     async closeSession() {
-
+		var status="normal";
 		// Close exam request
-        const result = await API.submit(this.matricola);
+        const result = await API.submit(this.matricola,status);
 		if(result.status=='error'){
 			$('#error').modal('show').find('.modal-body').text("Non hai risposta a "+result.message+ "domande");
             return;
@@ -185,7 +185,7 @@ class Session {
 	async forceCloseSession() {
 
 		// Close exam request
-        const result = await API.submit(this.matricola);
+        const result = await API.submitForced(this.matricola);
 		
         // Remove the timer
         clearInterval(this.timer);
@@ -193,7 +193,6 @@ class Session {
         // Hide session page
         $('#session').fadeOut();
 		
-
         // Show results page
         setTimeout(() => {
             this.showResults(result.message);

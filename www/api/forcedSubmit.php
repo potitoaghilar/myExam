@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require 'requires.php';
 
 // Create database connection
@@ -8,6 +10,7 @@ $connessione = Database::getInstance();
 // Get matricola
 $matricola = $_POST['matricola'];
 
+
 $response = new Response();
 
 //execute query
@@ -15,23 +18,17 @@ $query =$connessione->query("Select count(matricola_user) as numerorispostedate,
 //fetch result as an associative array
 $summary = $query->fetch_array();
 
-if($summary['numerorispostedate'] == $questions){
 	$response->status ="success";
 
 	// Set end time for given user 'matricola'
 	$querysubmit = $connessione->query("UPDATE users set end=NOW() where matricola=$matricola");
 	
 	if($summary['numerocorrette'] >= 18) {
-		$response->message = "Idoneo";
+		$response->message = "Tempo Scaduto:Idoneo";
 	}
 	if($summary['numerocorrette'] < 18) {
-		$response->message = "Non Idoneo";
+		$response->message = "Tempo Scaduto: Non Idoneo";
 	}
-
-} else {
-	$response->status="error";
-	$response->message="Ti mancano ". $questions-$summary['numerorispostedate']." risposte";
-}
 
 print json_encode($response);
 

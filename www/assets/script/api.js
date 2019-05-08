@@ -8,6 +8,7 @@ class API {
             TIME: API.baseEndpoint + '/api/time.php?matricola=',
             QUESTIONS: API.baseEndpoint + '/api/questions.php',
             SUBMIT: API.baseEndpoint + '/api/submit.php',
+			FORCEDSUBMIT: API.baseEndpoint + '/api/forcedSubmit.php',
             ANSWER: API.baseEndpoint + '/api/publish.php',
         };
     }
@@ -43,6 +44,13 @@ class API {
         return await $.ajax({
             type: 'POST',
             url: this.ENDPOINTS.SUBMIT,
+            data: {matricola},
+        });
+    }
+		static async submitForced(matricola) {
+        return await $.ajax({
+            type: 'POST',
+            url: this.ENDPOINTS.FORCEDSUBMIT,
             data: {matricola},
         });
     }
