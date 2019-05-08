@@ -86,6 +86,7 @@ $connect = Database::getInstance();
 			var bonus =parseInt($(nome3).val());
 			var malus =parseInt($(nome4).val());
 			
+			
 			switch ($(this).attr('data-action')) {
                 case 'changeBonus':
 					var type = 'bonus'; 

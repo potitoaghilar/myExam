@@ -131,7 +131,8 @@ class Session {
                 this.time = 0;
                 this.updateTimerUI();
 
-                this.closeSession();
+                //this.closeSession();
+				this.forceCloseSession();
             }
 
         }, 1000);
@@ -158,19 +159,46 @@ class Session {
     // Close the session and show the results
     async closeSession() {
 
+		// Close exam request
+        const result = await API.submit(this.matricola);
+		if(result.status=='error'){
+			$('#error').modal('show').find('.modal-body').text("Non hai risposta a "+result.message+ "domande");
+            return;
+		}
+		else{
         // Remove the timer
         clearInterval(this.timer);
 
         // Hide session page
         $('#session').fadeOut();
-
-        // Close exam request
-        const result = await API.submit(this.matricola);
+		}
 
         // Show results page
         setTimeout(() => {
             this.showResults(result.message);
         }, 400);
+			
+
+    }
+	
+	//force close session
+	async forceCloseSession() {
+
+		// Close exam request
+        const result = await API.submit(this.matricola);
+		
+        // Remove the timer
+        clearInterval(this.timer);
+
+        // Hide session page
+        $('#session').fadeOut();
+		
+
+        // Show results page
+        setTimeout(() => {
+            this.showResults(result.message);
+        }, 400);
+			
 
     }
 
