@@ -20,6 +20,12 @@ $(document).ready(async function () {
             return;
         }
 
+        // Check if matricola has 6 chars only
+        if(matricola.length != 6) {
+            $('#error').modal('show').find('.modal-body').text('La matricola inserita deve contenere 6 caratteri');
+            return;
+        }
+
         // Prepare environment with some visual effects
         $('.logo').removeClass('col-9').addClass('col-6');
         $('.exam-title').fadeOut();
