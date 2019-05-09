@@ -30,7 +30,8 @@ if($summary['numerorispostedate'] == $questions){
 
 } else {
 	$response->status="error";
-	$response->message="Ti mancano ". $questions-$summary['numerorispostedate']." risposte";
+	$response->message=$questions-$summary['numerorispostedate']." ";
+	
 }
 
 print json_encode($response);

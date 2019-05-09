@@ -30,6 +30,7 @@ $connect = Database::getInstance();
 
     <div class="mb-4 text-center">
         <h3><?= $examTitle ?></h3>
+		<h1><a href="lista.php">Stampa Esami studenti</a></h1>
     </div>
 
     <table style="margin:0 auto;">
@@ -58,6 +59,10 @@ $connect = Database::getInstance();
 
             $points = Points($risultato['matricola']);
             $votofinale = $points+$risultato['bonus'] - $risultato['malus'];
+			
+			if($votofinale>30){
+				$votofinale ="30L";
+			}
 
             print"<tr>
             <td><a href='/admin/studente.php?matricola=".$risultato['matricola']."'>".$risultato['matricola']."</a></td>
@@ -91,10 +96,16 @@ $connect = Database::getInstance();
                 case 'changeBonus':
 					var type = 'bonus'; 
 					points = points + amount-malus; //sottrarre malus
+					if(points>30){
+						points ="30L";
+					}
                     break;
                 case 'changeMalus':
 					var type = 'malus';   
 					points = points - amount+bonus; //aggiungere bonus
+					if(points>30){
+						points ="30L";
+					}
 					break;
             }
 			$.ajax({
