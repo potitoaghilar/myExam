@@ -8,7 +8,7 @@ $outputquestions = [];
 $connect = Database::getInstance();
 
 // Execute query to fetch questions
-$getquestions = $connect->query("Select * from questions");
+$getquestions = $connect->query("Select * from questions order by rand()");
 
 while($gettedquestion = $getquestions->fetch_array()){
 
