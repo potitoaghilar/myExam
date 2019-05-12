@@ -116,5 +116,5 @@ while($givedAnswers = $getAnswers->fetch_array()){
 	<?php
 } ?>
 	
-
+<?php require 'footer.php'; ?>
 </body>

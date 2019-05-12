@@ -77,48 +77,51 @@ $connect = Database::getInstance();
         ?>
 
     </table>
-</body>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <?php require 'footer.php'; ?>
+
     <script>
-		$('.points').change(function() {
-			var matricola=$(this).attr('matricola');
-			var amount =parseInt($(this).val());
-			var name='#labelPoints'+matricola;
-			var name2='#questions'+matricola;
-			var points =parseInt($(name2).text());
-			var nome3='#bonus'+matricola;
-			var nome4='#malus'+matricola;
-			var bonus =parseInt($(nome3).val());
-			var malus =parseInt($(nome4).val());
-			
-			
-			switch ($(this).attr('data-action')) {
+        $('.points').change(function() {
+            var matricola=$(this).attr('matricola');
+            var amount =parseInt($(this).val());
+            var name='#labelPoints'+matricola;
+            var name2='#questions'+matricola;
+            var points =parseInt($(name2).text());
+            var nome3='#bonus'+matricola;
+            var nome4='#malus'+matricola;
+            var bonus =parseInt($(nome3).val());
+            var malus =parseInt($(nome4).val());
+
+
+            switch ($(this).attr('data-action')) {
                 case 'changeBonus':
-					var type = 'bonus'; 
-					points = points + amount-malus; //sottrarre malus
-					if(points>30){
-						points ="30L";
-					}
+                    var type = 'bonus';
+                    points = points + amount-malus; //sottrarre malus
+                    if(points>30){
+                        points ="30L";
+                    }
                     break;
                 case 'changeMalus':
-					var type = 'malus';   
-					points = points - amount+bonus; //aggiungere bonus
-					if(points>30){
-						points ="30L";
-					}
-					break;
+                    var type = 'malus';
+                    points = points - amount+bonus; //aggiungere bonus
+                    if(points>30){
+                        points ="30L";
+                    }
+                    break;
             }
-			$.ajax({
-            type: 'POST',
-            url: 'updatePoints.php',
-            data: {amount, type, matricola},
-            success: function(response) {
-                alert(response.message);
-				$(name).html(points);
-            }
+            $.ajax({
+                type: 'POST',
+                url: 'updatePoints.php',
+                data: {amount, type, matricola},
+                success: function(response) {
+                    alert(response.message);
+                    $(name).html(points);
+                }
+            });
         });
-		});
-			
-			
-</script>
+
+    </script>
+
+</body>
+
 <?php $connect->close(); ?>

@@ -116,7 +116,9 @@ while($givedAnswers = $getAnswers->fetch_array()){
         </table>
 
     </section>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <?php require 'footer.php'; ?>
+
     <script>
 		$('.points').change(function() {
 			
