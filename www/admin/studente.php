@@ -73,7 +73,7 @@ while($givedAnswers = $getAnswers->fetch_array()){
 		$finale="30L";
 	}
 			else{
-				$finale=$corrette+$user['bonus']+$user['malus'];
+				$finale=$corrette+$user['bonus']-$user['malus'];
 			}
 			?>
 
