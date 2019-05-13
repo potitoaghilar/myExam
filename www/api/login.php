@@ -20,9 +20,15 @@ if(empty($matricola) || empty($nome) || empty($cognome)) {
     echo json_encode($message);
     return;
 }
+if(!is_numeric($matricola)){
+	$message->status = "error";
+    $message->message = "La matricola non è valida.";
+    echo json_encode($message);
+    return;
+}
 
 // Get user from database
-$user = mysqli_fetch_object($connect->query("select *, TIME_TO_SEC(TIMEDIFF(NOW(), start)) as deltaTime from users where matricola = $matricola limit 1"));
+$user = mysqli_fetch_object($connect->query("select *, TIME_TO_SEC(TIMEDIFF(NOW(), start)) as deltaTime from users where matricola = '$matricola' limit 1"));
 
 // Check if user already exists
 if(!$user) {
@@ -43,7 +49,7 @@ if(!$user) {
         if($user->deltaTime >= $maxtime) {
 
             // Close exam in database
-            $connect->query("Update users set end = NOW() where matricola = $matricola");
+            $connect->query("Update users set end = NOW() where matricola = '$matricola'");
 
             // Show alert to client
             $message->status = "error";
@@ -57,7 +63,7 @@ if(!$user) {
 
         // Get given answers from database
         $givenAnswers = [];
-        $getAnswers = $connect->query("Select id_question, id_answer from users_answers where matricola_user=".$matricola);
+        $getAnswers = $connect->query("Select id_question, id_answer from users_answers where matricola_user='".$matricola."'");
         while($answer = $getAnswers->fetch_array()){
             $data = new UserAnswer();
             $data->questionId = intval($answer['id_question']);

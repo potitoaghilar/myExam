@@ -47,7 +47,8 @@ $connect = Database::getInstance();
 
         function Points($matricola){
             $connect = Database::getInstance();
-            $GetResult = $connect->query("Select count(case correct when 1 then 1 else null end) as TestResult  from users_answers inner join answers on id_answer=answers.id where users_answers.matricola_user=".$matricola);
+            $GetResult = $connect->query("Select count(case correct when 1 then 1 else null end) as TestResult  from users_answers inner join answers on id_answer=answers.id where users_answers.matricola_user='".$matricola."'") or die("errore");
+
 
             // Fetch result as an associative array
             $summary = $GetResult->fetch_array();

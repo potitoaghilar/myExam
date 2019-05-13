@@ -7,7 +7,7 @@ $connect = Database::getInstance();
 
 $matricola=$_GET['matricola'];
 
-$getUserDetails = $connect->query("Select * from users where matricola=".$matricola);
+$getUserDetails = $connect->query("Select * from users where matricola='".$matricola."'");
 $user=$getUserDetails->fetch_assoc();
 
 // Inizializzo variabili
@@ -44,7 +44,7 @@ while($gettedquestion = $getquestions->fetch_array()) {
 }
 
 // Prelevo risposte studente
-$getAnswers = $connect->query("Select * from users_answers where matricola_user=" . $matricola) or die ("errore");
+$getAnswers = $connect->query("Select * from users_answers where matricola_user='" . $matricola."'") or die ("errore");
 $corrette = 0;
 $insertedAnswers = [];
 while($givedAnswers = $getAnswers->fetch_array()){
@@ -104,7 +104,7 @@ while($givedAnswers = $getAnswers->fetch_array()){
                                 <li>
                                     <?= $answer->text ?>
                                     <?= $answer->corrected == 1 ? ' (Risposta Corretta)' : '' ?>
-                                    <?= $answer->id == $insertedAnswers[$quest->id] ? ' (Risposta Selezionata)' : '' ?>
+                                    <?= @($answer->id==$insertedAnswers[$quest->id]) ? ' (Risposta Selezionata)' : '' ?>
                                 </li>
                             <?php endforeach; ?>
                         </ol>

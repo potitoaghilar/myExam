@@ -11,7 +11,7 @@ $id_answer = $_POST['answer_id'];
 $id_question = $_POST['question_id'];
 
 // Get open exam
-$query = $connect->query("SELECT * from users WHERE matricola=$matricola AND end IS NULL LIMIT 1");
+$query = $connect->query("SELECT * from users WHERE matricola='$matricola' AND end IS NULL LIMIT 1");
 
 // Check if user can still send answers
 if(mysqli_num_rows($query) == 0) {

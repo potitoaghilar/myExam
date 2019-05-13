@@ -11,7 +11,7 @@ $matricola = $_POST['matricola'];
 $type = $_POST['type']; //bonus or malus
 $amount = $_POST['amount'];
 
-$query = $connect->query("update users set $type=$amount where matricola=$matricola");
+$query = $connect->query("update users set $type=$amount where matricola='$matricola'");
 
 if($query) {
     $response->status = "success";

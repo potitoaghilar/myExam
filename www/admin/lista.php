@@ -101,7 +101,7 @@ while($givedAnswers = $getAnswers->fetch_array()){
                                 <li>
                                     <?= $answer->text ?>
                                     <?= $answer->corrected == 1 ? ' (Risposta Corretta)' : '' ?>
-                                    <?= $answer->id == $insertedAnswers[$quest->id] ? ' (Risposta Selezionata)' : '' ?>
+                                    <?= @($answer->id==$insertedAnswers[$quest->id]) ? ' (Risposta Selezionata)' : '' ?>
                                 </li>
                             <?php endforeach; ?>
                         </ol>

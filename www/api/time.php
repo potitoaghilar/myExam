@@ -9,7 +9,7 @@ $matricola = $_GET['matricola'];
 $connect = Database::getInstance();
 
 // Get time of provided user's matricola
-$getTime = $connect->query("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), start)) seconds from users where matricola=" . $matricola);
+$getTime = $connect->query("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), start)) seconds from users where matricola='" . $matricola."'");
 
 // Get elapsed time
 $elapsedTime = 0;
