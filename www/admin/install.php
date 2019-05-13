@@ -8,9 +8,6 @@ if(!file_exists('../../setup/questions.xml')) {
 
 $xml = simplexml_load_file("../../setup/questions.xml") or die("Errore");
 
-$data = json_encode($xml);
-$data = json_decode($data,true);
-
 $connect = Database::getInstance();
 
 // Inizializzo db
@@ -31,14 +28,21 @@ foreach($reset as $resetQuery){
 }
 // Fine
 
-foreach($data['question'] as $questItem){
-    $query = $connect->query("Insert into questions (text) values ('".$questItem['text']."')");
+foreach($xml->question as $questItem){
+    $query = $connect->query("Insert into questions (text) values ('" . str_replace('\'', '\\\'', $questItem->text) . "')");
 
     $id = $connect->insert_id;
-    $query = $connect->query("Insert into answers (text,id_question,correct) values ('".$questItem['correctAnswer']."','".$id."',1)");
 
-    foreach($questItem['answer'] as $answerItem){
-        $query = $connect->query("Insert into answers (text,id_question,correct) values ('".$answerItem."','".$id."',0)") or die("errore");
+    foreach($questItem->answer as $answerItem){
+
+        // Check if answer should be saved as correct or wrong
+        if($answerItem['correct'] == '1') {
+            $isCorrect = 1;
+        } else {
+            $isCorrect = 0;
+        }
+
+        $query = $connect->query("Insert into answers (text,id_question,correct) values ('" . str_replace('\'', '\\\'', $answerItem) . "','" . $id . "', $isCorrect)") or die("errore");
     }
 }
 
