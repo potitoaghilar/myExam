@@ -30,7 +30,7 @@ $connect = Database::getInstance();
 
     <div class="mb-4 text-center">
         <h3><?= $examTitle ?></h3>
-		<h1><a href="lista.php">Stampa Esami studenti</a></h1>
+		<h1><a href="/admin/lista.php">Stampa Esami studenti</a></h1>
     </div>
 
     <table style="margin:0 auto;">
