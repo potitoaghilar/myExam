@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questions>
+	<question>
+		<text>Per il trasferimento di documenti ipertestuali, quale protocollo viene usato?</text>
+		<answer correct="1">HTTP</answer>
+		<answer>FTP</answer>
+		<answer>SMTP</answer>
+		<answer>IMAP4</answer>
+		<answer>POP3</answer>
+	</question>
+	<question>
+		<text>Quale tra questi non è un evento di javascript?</text>
+		<answer correct="1">onHover</answer>
+		<answer>onLoad</answer>
+		<answer>onSubmit</answer>
+		<answer>onChange</answer>
+		<answer>onBlur</answer>
+	</question>
+	<question>
+		<text>A cosa serve il tag canvas?</text>
+		<answer correct="1">Tracciamento di forme e disegni</answer>
+		<answer>Creazione di mappe su immagini</answer>
+		<answer>Dividere la pagina</answer>
+		<answer>Formattare il testo</answer>
+		<answer>1</answer>
+	</question>
+	<question>
+		<text>A cosa serve una API</text>
+		<answer correct="1">Tracciamento di forme e disegni</answer>
+		<answer>Creazione di mappe su immagini</answer>
+		<answer>Dividere la pagina</answer>
+		<answer>Formattare il testo</answer>
+		<answer>1</answer>
+	</question>
+	<question>
+		<text>Indicare il formato di una immagine vettoriale</text>
+		<answer correct="1">svg</answer>
+		<answer>png</answer>
+		<answer>jpeg</answer>
+		<answer>gif</answer>
+		<answer>bmp</answer>
+	</question>
+	<question>
+		<text>quale dei seguenti tag consente di formattare un testo in grassetto</text>
+		<answer correct="1">b</answer>
+		<answer>em</answer>
+		<answer>i</answer>
+		<answer>div</answer>
+		<answer>br</answer>
+	</question>
+	<question>
+		<text>Indicare l'acronimo di HTML</text>
+		<answer correct="1">Hyper Text Markup Language</answer>
+		<answer>Hyperx Text Markup Language</answer>
+		<answer>High Transfer Markup Legacy</answer>
+		<answer>Hyper Text Markup Legacy</answer>
+		<answer>Hyper Transfer Marker Legacy</answer>
+	</question>
+	<question>
+		<text>Il tag break <br /> serve per...</text>
+		<answer correct="1">il ritorno a capo</answer>
+		<answer>rompere le pagine</answer>
+		<answer>creare una tabella</answer>
+		<answer>creare un paragrafo</answer>
+		<answer>distruggere il documento</answer>
+	</question>	
+	<question>
+		<text>URL sta per</text>
+		<answer correct="1">Uniform Resource Locator</answer>
+		<answer>Uniform Resource Language</answer>
+		<answer>Uniform Request Language</answer>
+		<answer>Uniform Request Locator</answer>
+		<answer>Uniform Remind Locator</answer>
+	</question>	
+	<question>
+		<text>Quale di questi tag implementa una lista ordinata</text>
+		<answer correct="1">ol</answer>
+		<answer>ul</answer>
+		<answer>li</answer>
+		<answer>ordered</answer>
+		<answer>unordered</answer>
+	</question>	
+	<question>
+		<text>Quale di questi tag permette l'implementazione dell'header di una tabella?</text>
+		<answer correct="1">th</answer>
+		<answer>td</answer>
+		<answer>tr</answer>
+		<answer>table</answer>
+		<answer>header</answer>
+	</question>	
+	<question>
+		<text>FTP è l'acronimo di </text>
+		<answer correct="1">File Transfer Protocol</answer>
+		<answer>File Transport Protocol</answer>
+		<answer>File Translate Protocol</answer>
+		<answer>File Table Preambol</answer>
+		<answer>File Time Protocol</answer>
+	</question>
+	<question>
+		<text>Javascript è l'acronimo di </text>
+		<answer correct="1">File Transfer Protocol</answer>
+		<answer>File Transport Protocol</answer>
+		<answer>File Translate Protocol</answer>
+		<answer>File Table Preambol</answer>
+		<answer>File Time Protocol</answer>
+	</question>	
+	<question>
+		<text>Quale dei seguenti tag permette di scrivere il testo in corsivo?</text>
+		<answer correct="1">i</answer>
+		<answer>br</answer>
+		<answer>ol</answer>
+		<answer>li</answer>
+		<answer>u</answer>
+	</question>
+	<question>
+		<text>A cosa serve un cookie?</text>
+		<answer correct="1">Memorizzare informazioni</answer>
+		<answer>A stampare un biscotto</answer>
+		<answer>Eliminare la cronologia</answer>
+		<answer>Svuotare la cache</answer>
+		<answer>Ad eliminare le sessioni</answer>
+	</question>
+	<question>
+		<text>Quali di questi è un framework?</text>
+		<answer correct="1">Bootstrap</answer>
+		<answer>Javascript</answer>
+		<answer>JSON</answer>
+		<answer>JOOMLA</answer>
+		<answer>CSS</answer>
+	</question>
+	<question>
+		<text>A cosa Serve un CSS?</text>
+		<answer correct="1">Ad assegnare degli stili</answer>
+		<answer>A memorizzare le variabili</answer>
+		<answer>A Pulire La Cache di Sicurezza</answer>
+		<answer>Non Esiste</answer>
+		<answer>A Niente</answer>
+	</question>
+	<question>
+		<text>A cosa Serve un CSS?</text>
+		<answer correct="1">Ad assegnare degli stili</answer>
+		<answer>A memorizzare le variabili</answer>
+		<answer>A Pulire La Cache di Sicurezza</answer>
+		<answer>Non Esiste</answer>
+		<answer>A Niente</answer>
+	</question>
+	<question>
+		<text>Indicare l'acronimo di CSS?</text>
+		<answer correct="1">Cascading Style Sheets</answer>
+		<answer>Constrain Style Sheet</answer>
+		<answer>Constrain Sheet Style</answer>
+		<answer>Community Clear Space</answer>
+		<answer>Community Sheet Space</answer>
+	</question>
+	<question>
+		<text>Indicare l'acronimo di CSS?</text>
+		<answer correct="1">Cascading Style Sheets</answer>
+		<answer>Constrain Style Sheet</answer>
+		<answer>Constrain Sheet Style</answer>
+		<answer>Community Clear Space</answer>
+		<answer>Community Sheet Space</answer>
+	</question>
+	<question>
+		<text>A cosa serve il tag head?</text>
+		<answer correct="1">definire l'intestazione della pagina</answer>
+		<answer>definire la barra di navigazione</answer>
+		<answer>importare un foglio di stile</answer>
+		<answer>a definire l'indirizzo della pagina</answer>
+		<answer>a svuotare il cestino</answer>
+	</question>
+	<question>
+		<text>A cosa serve il tag head?</text>
+		<answer correct="1">definire l'intestazione della pagina</answer>
+		<answer>definire la barra di navigazione</answer>
+		<answer>importare un foglio di stile</answer>
+		<answer>a definire l'indirizzo della pagina</answer>
+		<answer>a svuotare il cestino</answer>
+	</question>
+	<question>
+		<text>A cosa serve il tag body?</text>
+		<answer correct="1">a definire il corpo della pagina</answer>
+		<answer>a definire il footer della pagina</answer>
+		<answer>non esiste</answer>
+		<answer>a definire l'indirizzo della pagina</answer>
+		<answer>a svuotare il cestino</answer>
+	</question>
+	<question>
+		<text>A cosa serve un tag semantico?</text>
+		<answer correct="1">a migliorare la leggibilità della pagina da parte dei motori di ricerca</answer>
+		<answer>rendere meno comprensibile il codice di una pagina web</answer>
+	</question>
+		<question>
+		<text>Quale di questi non è un tag semantico?</text>
+		<answer correct="1">a</answer>
+		<answer>section</answer>
+		<answer>aside</answer>
+		<answer>nav</answer>
+		<answer>footer</answer>
+	</question>
+	<question>
+		<text>A cosa serve il tag semantico footer?</text>
+		<answer correct="1">a contenere informazioni della sezione a cui appartiene</answer>
+		<answer>ad inserire i titoli</answer>
+		<answer>ad indicare una sezione generica</answer>
+		<answer>a definire la nav bar</answer>
+		<answer>a definire il contenuto di un articolo</answer>
+	</question>
+	<question>
+		<text>A cosa serve la proprietà background-attachment?</text>
+		<answer correct="1">a definire il comportamento dell’immagine rispetto agli elementi della pagina</answer>
+		<answer>a definire lo sfondo della pagina</answer>
+		<answer>ad indicare una sezione generica</answer>
+		<answer>a definire il colore di sfondo</answer>
+		<answer>a definire la posizione (directory) dell'immagine di sfondo</answer>
+	</question>
+	<question>
+		<text>A cosa serve la proprietà background-attachment?</text>
+		<answer correct="1">a definire il comportamento dell’immagine rispetto agli elementi della pagina</answer>
+		<answer>a definire lo sfondo della pagina</answer>
+		<answer>ad indicare una sezione generica</answer>
+		<answer>a definire il colore di sfondo</answer>
+		<answer>a definire la posizione (directory) dell'immagine di sfondo</answer>
+	</question>
+		<question>
+		<text>A cosa serve il tag html?</text>
+		<answer correct="1">indicare il linguaggio della pagina</answer>
+		<answer>a formattare il testo in html nella pagina</answer>
+		<answer>a definire la sezione corpo della pagina</answer>
+		<answer>a definire il colore di sfondo</answer>
+	</question>
+	</question>
+		<question>
+		<text>Il tag title in quale sezione va inserito?</text>
+		<answer correct="1">head</answer>
+		<answer>body</answer>
+		<answer>html</answer>
+		<answer>nav</answer>
+	</question>
+</questions>
