@@ -228,7 +228,6 @@
 		<answer>a definire la sezione corpo della pagina</answer>
 		<answer>a definire il colore di sfondo</answer>
 	</question>
-	</question>
 		<question>
 		<text>Il tag title in quale sezione va inserito?</text>
 		<answer correct="1">head</answer>
