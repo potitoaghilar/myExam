@@ -6505,7 +6505,8 @@ html body {
     font-size: xx-large; }
 
 .main-container {
-  margin-top: 30px; }
+  margin-top: 30px;
+  margin-bottom: 65px; }
 
 .logo {
   -webkit-transition: all 1s;
@@ -6611,6 +6612,53 @@ a.nav-link:hover {
     margin-bottom: 20px;
     outline: none; }
 
+#navigator {
+  opacity: 0;
+  height: 15px;
+  box-shadow: 0 0 5px #0000002e;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  width: 90%;
+  margin: auto; }
+  #navigator span {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    text-align: center;
+    border: 3px solid #188886;
+    top: -15px;
+    position: relative;
+    box-shadow: 0 0 30px #00000052;
+    background-color: white;
+    font-size: 13px;
+    cursor: pointer;
+    margin: auto;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s;
+    -ms-transition: all .4s;
+    -o-transition: all .4s;
+    transition: all .4s; }
+    #navigator span.active {
+      background-color: #188886;
+      color: #fff; }
+    #navigator span.answered {
+      background-color: #28a745;
+      border-color: #28a745;
+      color: #fff; }
+    #navigator span.not-answered {
+      background-color: #b72412;
+      border-color: #b72412;
+      color: #fff; }
+
+#navigator span:first-child {
+  margin-left: 0; }
+
+#navigator span:last-child {
+  margin-right: 0; }
+
 @font-face {
   font-family: Linotte;
   font-weight: normal;
@@ -6619,3 +6667,5 @@ a.nav-link:hover {
   font-family: Linotte;
   font-weight: bold;
   src: url("../font/Linotte/Linotte Bold.otf"); }
+
+/*# sourceMappingURL=main.css.map */

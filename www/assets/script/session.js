@@ -19,10 +19,12 @@ class Session {
         this.nome = nome;
         this.cognome = cognome;
         this.matricola = matricola;
-		
 
         // Set timer
         this.setTimer();
+
+        // Question read: array of ids of already opened questions
+        this.questionsRead = [];
     }
 
     async setTimer() {
@@ -104,6 +106,9 @@ class Session {
             // Show first question
             this.changeQuestion(Session.NEXT_QUESTION);
 
+            // Show bottom navigator
+            this.showBottomNavigator();
+
             // Show timer
             $('#time').fadeIn();
 			$('#user_details').fadeIn();
@@ -112,6 +117,55 @@ class Session {
             this.timer = this.setTimerTick();
 
         }, 600);
+
+    }
+
+    showBottomNavigator() {
+
+        // Generate items
+        let markers = [];
+        this.questions.forEach((question, index) => markers.push($('<span question-id="' + question.id + '">' + (index + 1) + '</span>')));
+
+        // Add on click event to markers
+        markers.forEach((marker, index) => marker.click(() => this.changeQuestion(index, true)));
+
+        // Add markers and show navigator
+        $('#navigator').html(markers).fadeTo(400, 1);
+
+        // Call updater to show right colors on navbar
+        this.updateBottomNavigator();
+
+    }
+
+    updateBottomNavigator() {
+
+        // Remove classes from all markers
+        $('#navigator span').removeClass('active').removeClass('not-answered').removeClass('answered');
+
+        // Show current marker
+        $('#navigator span:nth-child(' + (this.currentQuestion + 1) + ')').addClass('active');
+
+        // Show not answered questions markers
+        this.questionsRead.forEach(id => {
+
+            // Stop if the question is the current one
+            if(id == this.questions[this.currentQuestion].id) {
+                return;
+            }
+
+            // Check if has answered to other questions
+            if(this.answers.find(x => x.questionId == id) == undefined) {
+                $('#navigator span[question-id=' + id + ']').addClass('not-answered');
+            }
+
+        });
+
+        // Show answered questions markers
+        this.answers.forEach(answer => {
+            if(answer.questionId != this.questions[this.currentQuestion].id) {
+                $('#navigator span[question-id=' + answer.questionId + ']').addClass('answered')
+            }
+        });
 
     }
 
@@ -138,7 +192,7 @@ class Session {
         }, 1000);
     }
 
-    async changeQuestion(nextOrPrevious) {
+    async changeQuestion(nextOrPrevious, isDirectJump = false) {
 
         const sessionElem = $('#session');
 
@@ -148,8 +202,17 @@ class Session {
             await sleep(400);
         }
 
-        // Increment question counter and update UI
-        this.currentQuestion += nextOrPrevious;
+        // Increment question counter
+        if(isDirectJump) {
+            this.currentQuestion = nextOrPrevious;
+        } else {
+            this.currentQuestion += nextOrPrevious;
+        }
+
+        // Adds this question to opened questions
+        this.questionsRead.push(this.questions[this.currentQuestion].id);
+
+        // Update UI
         this.draw();
 
         // Fade in animation
@@ -158,19 +221,26 @@ class Session {
 
     // Close the session and show the results
     async closeSession() {
-		var status="normal";
+
+		const status = "normal";
+
 		// Close exam request
         const result = await API.submit(this.matricola,status);
-		if(result.status=='error'){
+
+		if(result.status === 'error') {
+
 			$('#error').modal('show').find('.modal-body').text("Non hai risposta a "+result.message+ "domande");
             return;
-		}
-		else{
-        // Remove the timer
-        clearInterval(this.timer);
 
-        // Hide session page
-        $('#session').fadeOut();
+		} else {
+
+            // Remove the timer
+            clearInterval(this.timer);
+
+            // Hide session page and navigator
+            $('#session').fadeOut();
+            $('#navigator').fadeOut();
+
 		}
 
         // Show results page
@@ -190,8 +260,9 @@ class Session {
         // Remove the timer
         clearInterval(this.timer);
 
-        // Hide session page
+        // Hide session page and navigator
         $('#session').fadeOut();
+        $('#navigator').fadeOut();
 		
         // Show results page
         setTimeout(() => {
@@ -228,6 +299,9 @@ class Session {
 
         const that = this;
 
+        // Update navigation bar
+        this.updateBottomNavigator();
+
         // Update question number on UI
         $('.questions-done').text(this.currentQuestion + 1);
 
@@ -250,7 +324,7 @@ class Session {
         let submitBtnHTML = '';
 
         // Generate close exam button
-        if(this.currentQuestion == this.questions.length - 1) {
+        if(this.answers.length == this.questions.length) {
             submitBtnHTML = '<button id="closeSession" type="button" data-action="submit" class="btn btn-danger mt-3 ml-3">Chiudi esame</button>';
         }
 
