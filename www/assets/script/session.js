@@ -291,6 +291,9 @@ class Session {
 
         // Send answer to server
         API.postAnswer(this.matricola, questionId, answerId);
+
+        // Show "Chiudi esame" button on UI
+        this.showSubmitBtn();
 		
     }
 
@@ -321,15 +324,9 @@ class Session {
         // Generate the next question button HTML
         const prevBtnHTML = '<button type="button" data-action="previous" class="btn btn-primary mt-3 mr-3 changeQuestion ' + (this.currentQuestion == 0 ? 'disabled' : '') + '">Precedente</button>';
         const nextBtnHTML = '<button type="button" data-action="next" class="btn btn-primary mt-3 changeQuestion ' + (this.currentQuestion == this.questions.length - 1 ? 'disabled' : '') + '">Successiva</button>';
-        let submitBtnHTML = '';
-
-        // Generate close exam button
-        if(this.answers.length == this.questions.length) {
-            submitBtnHTML = '<button id="closeSession" type="button" data-action="submit" class="btn btn-danger mt-3 ml-3">Chiudi esame</button>';
-        }
 
         // Prints all the generated HTML to screen
-        $('#session').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + prevBtnHTML + nextBtnHTML + submitBtnHTML);
+        $('#session').html(questionHTML + '<div class="mx-auto mt-3 w-50 text-left">' + answersHTML + '</div>' + prevBtnHTML + nextBtnHTML);
 
         // Add handler to save answer given by user
         $('#session .radio.answer input').change(function() {
@@ -360,15 +357,27 @@ class Session {
             }
 
         });
-		
-        // Add click listener to close exam
-        $('#closeSession').click(() => this.closeSession());
+
+        // Show submit button
+        this.showSubmitBtn();
 
     }
 
     // Show current and total question to screen
     static showQuestionsCounter() {
         $('.questions').animate({width: '40%'}, 400).fadeTo(400, 1);
+    }
+
+    showSubmitBtn() {
+
+        if(this.answers.length == this.questions.length) {
+
+            // Generate close exam button
+            $('#session').append('<button id="closeSession" type="button" data-action="submit" class="btn btn-danger mt-3 ml-3">Chiudi esame</button>');
+
+            // Add click listener to close exam
+            $('#closeSession').click(() => this.closeSession());
+        }
     }
 
     // Show results page on UI
