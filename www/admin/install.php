@@ -7,7 +7,6 @@ if(!file_exists('../../setup/questions.xml')) {
 }
 
 $xml = simplexml_load_file("../../setup/questions.xml") or die("Errore");
-
 $connect = Database::getInstance();
 
 // Inizializzo db
@@ -42,7 +41,7 @@ foreach($xml->question as $questItem){
             $isCorrect = 0;
         }
 
-        $query = $connect->query("Insert into answers (text,id_question,correct) values ('" . str_replace('\'', '\\\'', $answerItem) . "','" . $id . "', $isCorrect)") or die("errore");
+        $query = $connect->query("Insert into answers (text,id_question,correct) values ('" . str_replace('\'', '\\\'', $answerItem) . "','" . $id . "', $isCorrect)") or die("errore connessione");
     }
 }
 

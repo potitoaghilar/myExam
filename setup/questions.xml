@@ -26,7 +26,7 @@
 	</question>
 	<question>
 		<text>A cosa serve una API</text>
-		<answer correct="1">Tracciamento di forme e disegni</answer>
+		<answer correct="1">Permettere il riuso del software</answer>
 		<answer>Creazione di mappe su immagini</answer>
 		<answer>Dividere la pagina</answer>
 		<answer>Formattare il testo</answer>
@@ -97,8 +97,8 @@
 		<answer>File Time Protocol</answer>
 	</question>
 	<question>
-		<text>Javascript è l'acronimo di </text>
-		<answer correct="1">File Transfer Protocol</answer>
+		<text>SFTP è l'acronimo di </text>
+		<answer correct="1"> SSH File Transfer Protocol</answer>
 		<answer>File Transport Protocol</answer>
 		<answer>File Translate Protocol</answer>
 		<answer>File Table Preambol</answer>
@@ -137,8 +137,8 @@
 		<answer>A Niente</answer>
 	</question>
 	<question>
-		<text>A cosa Serve un CSS?</text>
-		<answer correct="1">Ad assegnare degli stili</answer>
+		<text>A cosa Serve un file js?</text>
+		<answer correct="1">Importare funzioni javascript</answer>
 		<answer>A memorizzare le variabili</answer>
 		<answer>A Pulire La Cache di Sicurezza</answer>
 		<answer>Non Esiste</answer>
@@ -158,7 +158,7 @@
 		<answer>Constrain Style Sheet</answer>
 		<answer>Constrain Sheet Style</answer>
 		<answer>Community Clear Space</answer>
-		<answer>Community Sheet Space</answer>
+		<answer>Correct Sheet Space</answer>
 	</question>
 	<question>
 		<text>A cosa serve il tag head?</text>

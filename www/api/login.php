@@ -13,6 +13,7 @@ $matricola = $_POST['matricola'];
 $nome = $_POST['nome'];
 $cognome = $_POST['cognome'];
 
+
 // Check if user has inserted non empty datas
 if(empty($matricola) || empty($nome) || empty($cognome)) {
     $message->status = "error";
@@ -32,7 +33,9 @@ $user = mysqli_fetch_object($connect->query("select *, TIME_TO_SEC(TIMEDIFF(NOW(
 
 // Check if user already exists
 if(!$user) {
-
+	//SQL Attack prevention
+	$nome=str_replace("'", "&apos;", $nome);
+	$cognome=str_replace("'", "&apos;", $cognome);
     // Insert user in users
     $insertuserdata = $connect->query("Insert into users (matricola,nome,cognome,start) values ('".$matricola."','".$nome."','".$cognome."',NOW())");
 

@@ -6,8 +6,8 @@ class Database {
         'host' => 'localhost',
         'port' => '3306',
         'username' => 'root',
-        'password' => 'password',
-        'database' => 'esame',
+        'password' => '',
+        'database' => 'my_myexamplatform',
     ];
 
     static function getInstance() {
