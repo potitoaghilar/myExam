@@ -6649,8 +6649,8 @@ a.nav-link:hover {
       border-color: #28a745;
       color: #fff; }
     #navigator span.not-answered {
-      background-color: #b72412;
-      border-color: #b72412;
+      background-color: #dd8d09;
+      border-color: #dd8d09;
       color: #fff; }
 
 #navigator span:first-child {
@@ -6667,3 +6667,5 @@ a.nav-link:hover {
   font-family: Linotte;
   font-weight: bold;
   src: url("../font/Linotte/Linotte Bold.otf"); }
+
+/*# sourceMappingURL=main.css.map */
