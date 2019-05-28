@@ -1,5 +1,4 @@
 <?php
-
 require 'requires.php';
 require 'head.php';
 
