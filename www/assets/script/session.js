@@ -25,6 +25,8 @@ class Session {
 
         // Question read: array of ids of already opened questions
         this.questionsRead = [];
+
+        this.submitIsShown = false;
     }
 
     async setTimer() {
@@ -85,7 +87,7 @@ class Session {
         // Put correct and wrong answers together
         this.questions.push(new Question(questionData.id, questionData.text, answers));
     }
-	
+
 
     initSession() {
 
@@ -247,28 +249,28 @@ class Session {
         setTimeout(() => {
             this.showResults(result.message);
         }, 400);
-			
+
 
     }
-	
+
 	//force close session
 	async forceCloseSession() {
 
 		// Close exam request
         const result = await API.submitForced(this.matricola);
-		
+
         // Remove the timer
         clearInterval(this.timer);
 
         // Hide session page and navigator
         $('#session').fadeOut();
         $('#navigator').fadeOut();
-		
+
         // Show results page
         setTimeout(() => {
             this.showResults(result.message);
         }, 400);
-			
+
 
     }
 
@@ -294,7 +296,7 @@ class Session {
 
         // Show "Chiudi esame" button on UI
         this.showSubmitBtn();
-		
+
     }
 
     // This method updates the UI showing the question on the screen
@@ -352,11 +354,14 @@ class Session {
 
                         // Unbind the click action to avoid answer spamming! (IMPORTANT)
                         $(this).unbind();
-                    } 
+                    }
 					break;
             }
 
         });
+
+        // Reset shown flag
+        this.submitIsShown = false;
 
         // Show submit button
         this.showSubmitBtn();
@@ -370,13 +375,15 @@ class Session {
 
     showSubmitBtn() {
 
-        if(this.answers.length == this.questions.length) {
+        if(this.answers.length == this.questions.length && !this.submitIsShown) {
 
             // Generate close exam button
             $('#session').append('<button id="closeSession" type="button" data-action="submit" class="btn btn-danger mt-3 ml-3">Chiudi esame</button>');
 
             // Add click listener to close exam
             $('#closeSession').click(() => this.closeSession());
+
+            this.submitIsShown = true;
         }
     }
 
