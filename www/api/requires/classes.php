@@ -18,7 +18,6 @@ class Answer{
     public $id;
     public $text;
 	public $corrected;
-
 }
 
 class Question {
