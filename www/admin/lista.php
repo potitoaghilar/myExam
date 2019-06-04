@@ -1,3 +1,8 @@
+<style>
+	.questions{
+		page-break-after: always;
+	}
+</style>
 <?php
 
 require 'requires.php';
@@ -84,7 +89,7 @@ while($givedAnswers = $getAnswers->fetch_array()){
         </div>
     </div>
 
-    <section class="container">
+    <section class="container questions">
 
         <table>
 

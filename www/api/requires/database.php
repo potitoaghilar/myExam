@@ -5,7 +5,7 @@ class Database {
     const config = [
         'host' => 'localhost',
         'port' => '3306',
-        'username' => 'examplatform',
+        'username' => 'myexamplatform',
         'password' => '',
         'database' => 'my_myexamplatform',
     ];
