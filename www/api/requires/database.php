@@ -5,9 +5,9 @@ class Database {
     const config = [
         'host' => 'localhost',
         'port' => '3306',
-        'username' => 'root',
+        'username' => 'examplatform',
         'password' => '',
-        'database' => 'my_myexamplatform',
+        'database' => 'my_examplatform',
     ];
 
     static function getInstance() {

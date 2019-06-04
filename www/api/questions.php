@@ -1,5 +1,5 @@
 <?php
-
+require_once '../security.php';
 require 'requires.php';
 
 $outputquestions = [];
