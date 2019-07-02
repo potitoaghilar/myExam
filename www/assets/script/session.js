@@ -391,7 +391,7 @@ class Session {
     showResults(apiResult) {
 
         // Generate HTML for correct answers text
-        const result = '<div class="summaryLabel">Esame concluso</div><div class="summary">' + apiResult + '</span></div>';
+        const result = '<div class="summaryLabel">Esame concluso</div><div class="summary">' + apiResult + '</div>';
 
         // Show HTML on UI
         $('#session').html(result).fadeIn();
